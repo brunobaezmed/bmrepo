@@ -41,7 +41,6 @@ async function load(){
 async function load(){
 
 
-
     const request= await fetch('users');
 
     const users1 =  await request.json();
