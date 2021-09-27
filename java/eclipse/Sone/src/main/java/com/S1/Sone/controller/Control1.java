@@ -79,19 +79,7 @@ public class Control1 {
 				return utime.getId();
 	}
 	
-	
-	@RequestMapping(value="req")
-		public String ins() {
-				
-			String name="";
-			if(name.equals("Bruno")){
-			return "404.html"; 	
-			}
-			return "401.html";
-			
-		
-	}
-	
+
 	
 	
 	
