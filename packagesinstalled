@@ -1,0 +1,148 @@
+    1  ls -al
+    2  ls
+    3  ls -al
+    4  whoami
+    5  cat .bash_logout 
+    6  vim
+    7  code
+    8  code-oss
+    9  sublime
+   10  sublime-tex
+   11  sublime-text
+   12  gnome-terminal
+   13  man npm
+   14  man rpm
+   15  ls -al
+   16  exit
+   17  dnf install mariadb
+   18  git
+   19  ls -al
+   20  cd Downloads
+   21  cd /home/bruno/Downloads/
+   22  ls
+   23  rpm -f sle
+   24  rpm -i sle-2.0-4.i386.rpm 
+   25  sudo rpm -i sle-2.0-4.i386.rpm 
+   26  whoami
+   27  sudo rpm -i sle-2.0-4.i386.rpm 
+   28  man dnf
+   29   dnf -h
+   30  ls
+   31  rpm -qpR  sle-2.0-4.i386.rpm 
+   32  find / -name query
+   33  dnf install libgcc-11.0.1-0.3.fc34.i686   
+   34  rpm -i sle-2.0-4.i386.rpm 
+   35  ls 
+   36  cat newfile 
+   37  ls
+   38  usr/local/bin/sle2 
+   39  ls usr/local/bin
+   40  ls -al usr/local/bin/sle2 
+   41  -al usr/local/bin/sle2
+   42   usr/local/bin/sle2
+   43  cd  usr/local/bin/
+   44  ls
+   45  ls -al
+   46  cd sle
+   47  cd ..
+   48  ls
+   49  ls -al
+   50  cd ..
+   51  usr/local/sle2/bin
+   52  usr/local/sle2/bin/sle2 
+   53  ls
+   54  cd usr/
+   55  ls
+   56  cd local/
+   57  ls -al
+   58  cd sle2/
+   59  ls
+   60  cd bin/
+   61  ls
+   62  exec sle2
+   63  exec ./sle2
+   64  exec ./sle2 
+   65  ls
+   66  ls -al
+   67  exit
+   68  dnf remove libgcc-11.0.1-0.3.fc34.i686   
+   69  exit
+   70  find / -name libc6
+   71  find / -name zlib1g
+   72  find / -name libgcc1
+   73  who
+   74  man who
+   75  who -all
+   76  man who
+   77  ps
+   78  find / -name libgcc1
+   79  cat /etc/passwd
+   80  find / -name libgcc1
+   81  find / -name sle
+   82  find // -name sle
+   83  find / -name "sle"
+   84  exit
+   85  history
+   86  dnf remove libgcc-11.0.1-0.3.fc34.i686
+   87  history
+   88  dnf remove libgcc-11.0.1-0.3.fc34.i686
+   89  dnf install glibc
+   90  dnf install libx11
+   91  dnf install libX11
+   92  dnf install libX11-libX11-devel-1.7.2-3.fc34.i686
+   93  dnf install libX11-devel-1.7.2-3.fc34.i686
+   94  dnf install libX
+   95  dnf install libXext-devel-1.3.4-6.fc34.3
+   96  dnf install glib
+   97  dnf install glib-1:1.2.10-62.fc34.i686 
+   98  dnf install libj
+   99  dnf  install libjpeg-turbo
+  100  dnf  install libjpeg-turbo-devel-2.0.90-2.fc34.i686
+  101  dnf  install compat-libstdc++-33
+  102  dnf  install libz.so.1
+  103  dnf  install libXext.so.6
+  104  dnf  install libXi.so.6
+  105  dnf  install libgdk-1.2.so.0
+  106  dnf  install libpng12.so.0
+  107  dnf  install libstdc++.so.5 
+  108  clear
+  109  dnf install libstdc++-devel-11.0.1-0.3.fc34.i686
+  110  exut
+  111  exit
+  112  man history
+  113  echo $HISTSIZE
+  114  history
+  115  gcc -
+  116  who
+  117  history
+  118  ls
+  119  ls -al
+  120  cat anaconda-ks.cfg 
+  121  ls
+  122  ls -al
+  123  cat .xauthBdPTbg 
+  124  cat .tcshrc 
+  125  cat .lesshst 
+  126  cat .cshrc 
+  127  who
+  128  whoami
+  129  man whoami
+  130  whoami -l
+  131  man whoami
+  132  un
+  133  -un
+  134  man whoami
+  135  id
+  136  id -a
+  137  id --real
+  138  id --user
+  139  find -name "chrome"
+  140  find / -name "chrome"
+  141  /opt/google/chrome/
+  142  /opt/google/chrome/google-chrome 
+  143  /opt/google/chrome/chrome
+  144  history
+  145  history > /home/bruno/Documents/packagesinstalled
+ libstdc++-11.2.1-1.fc34.i686	GNU Standard C++ Library
+ libstdc++-11.2.1-1.fc34.x86_64	GNU Standard C++ Library
+ libstdc++-devel-11.2.1-1.fc34.i686	Header files and libraries for C++ development
