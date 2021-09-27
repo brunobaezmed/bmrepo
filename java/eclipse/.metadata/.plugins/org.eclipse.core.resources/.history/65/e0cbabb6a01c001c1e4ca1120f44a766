@@ -1,0 +1,163 @@
+package searching;
+
+import javax.swing.JComponent;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JMenuBar;
+import javax.swing.JOptionPane;
+import javax.swing.JPopupMenu;
+import javax.swing.SwingConstants;
+import javax.swing.plaf.basic.BasicBorders;
+import javax.swing.plaf.basic.BasicInternalFrameUI;
+import javax.swing.plaf.basic.BasicSplitPaneUI.BasicHorizontalLayoutManager;
+
+import java.awt.LayoutManager;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.security.SecureRandom;
+import java.util.ArrayList;
+import java.util.List;
+public class TestBST {
+
+	public static void main(String[] args) {
+		SecureRandom rng=new SecureRandom();
+		BinarySearchTree<Long,String> bst=new BinarySearchTree<Long,String>();
+		Long t =System.nanoTime();
+		List<String> values = null;
+		ArrayList<Long>keys=new ArrayList<Long>();
+		
+		
+/*		try {
+			values = Files.readAllLines(Path.of("/home/bruno/Documents/java/eclipse/Searching/src/searching/FileSymbol"));
+		} catch (IOException e) {
+
+			e.printStackTrace();
+		}
+		
+		for(String val:values) {
+			t=rng.nextLong()%10;
+			keys.add(t);
+			bst.insertKey(bst, t, val);
+		}
+		JOptionPane.showMessageDialog(frame,bst.ListInorder(bst), "keymin,value", JOptionPane.INFORMATION_MESSAGE, null);	*/	
+
+		//JOptionPane.showMessageDialog(null,bst.keymin(bst)+" "+bst.getValue(bst, bst.keymin(bst)), "keymin,value", JOptionPane.INFORMATION_MESSAGE, null);		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		bst.insertKey(bst, (long) 77, "matias");
+		bst.insertKey(bst, (long) 89, "baez");
+		bst.insertKey(bst, (long) 23, "medina");
+		bst.insertKey(bst, (long) 12, "milanesa");
+		bst.insertKey(bst, (long) 35, "asado");
+		bst.insertKey(bst, (long) 63, "atun");
+		bst.insertKey(bst, (long) 5,"sandwich");
+		bst.insertKey(bst, (long) 9,"campera");
+		bst.insertKey(bst, (long) 85,"c");
+		bst.insertKey(bst, (long) 25, "atun");
+		
+		JLabel label=new JLabel("label");
+		JFrame frame=new JFrame("frame1");
+		
+	
+		//label.setSize(1000,1000);
+		//label.setVisible(true);
+		label.setText("\t"+bst.getValue(bst, bst.keymin(bst)));
+
+		frame.setLocationRelativeTo(null);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		frame.setContentPane(label);
+		frame.getContentPane();
+		JFrame.setDefaultLookAndFeelDecorated(true);
+		frame.setVisible(true);
+		//JOptionPane.showMessageDialog(label.get,bst.ListInorder(bst), "keymin,value", JOptionPane.INFORMATION_MESSAGE, null);
+		
+		
+		//bst.keymin(bst);
+		//bst.keymax(bst);
+		/*bst.removeMin(bst);
+		bst.removeMin(bst);
+		bst.removeMin(bst);
+		bst.removeMin(bst);
+		bst.removeMin(bst);
+		bst.removeMin(bst);
+		bst.removeMin(bst);
+		bst.removeMin(bst);
+		bst.removeMin(bst);*/
+		/*bst.Inorder(bst);
+		System.out.println();
+		t=System.nanoTime();
+		bst.removeKey(bst, (long)35);
+	
+		
+		bst.removeKey(bst, (long)55);
+		bst.removeKey(bst, (long)63);
+		bst.removeKey(bst, (long)23);
+		bst.removeKey(bst, (long)89);
+		bst.removeKey(bst, (long)85);
+	    bst.removeKey(bst,(long) 5);	
+		bst.removeKey(bst,(long) 77);
+		bst.removeKey(bst,(long) 9);
+	
+		
+	
+	
+		bst.removeKey(bst, (long)25);
+		t=System.nanoTime()-t;
+	
+			
+		JOptionPane.showMessageDialog(null,t, "time(ns) ", JOptionPane.INFORMATION_MESSAGE, null);
+		
+		System.out.println(bst.size()+" "+bst.keymax(bst)+" "+bst.isEmpty());
+		bst.removeKey(bst, (long)12);
+		
+		System.out.println(bst.size()+" "+bst.keymax(bst)+" "+bst.isEmpty());
+		bst.Inorder(bst);
+		
+		
+		/*bst.removeMax(bst);
+		bst.removeMax(bst);
+		bst.removeMax(bst);
+		bst.removeMax(bst);
+		bst.removeMax(bst);
+		bst.removeMax(bst);
+		bst.removeMax(bst);
+		bst.removeMax(bst);
+		bst.removeMax(bst);
+		bst.removeMax(bst);*/
+	
+		
+		
+		
+		//bst.getvalue(bst,(long)35);
+		
+		//bst.getvalue(bst, (long)55);
+
+	}
+
+}
