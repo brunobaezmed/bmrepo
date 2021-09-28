@@ -81,7 +81,7 @@ async function load(){
 async function erase(id){
    
 
-    //fetch('user/delete/'+id);
+
    fetch('user/delete/'+id,{
        method:'DELETE'
    });
@@ -112,5 +112,4 @@ async function erase(id){
     });
     const users1 = await request.json();
     console.log(users1);
-}
-*/
+}*/
