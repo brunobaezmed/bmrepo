@@ -42,15 +42,31 @@ async function load(){
 
     const request= await fetch('users');
 
+
+    var myinit={method:'DELETE' };
+  
+
+    //const del=await fetch('user/delete/{id}',myinit);
+
+
+
+
+
     const users1 =  await request.json();
+
+
+    const requesdel=await fetch('user/delete/'+id);
+
     console.log(users1);
 
 	let	listhtml='';
  
-        
+    
     for(let list of users1){
-	
-	let listusers=' <tr><td>'+list.id+'</td><td>'+list.name+'</td><td>'+list.lastname+'</td><td>'+list.numberphone+'</td></tr>'
+
+        let buttonerase= '<i class="fas fa-user-minus"></i>' ; 
+
+	let listusers=' <tr><td>'+list.id+'</td><td>'+list.name+'</td><td>'+list.lastname+'</td><td>'+list.numberphone+'</td><td>'+buttonerase+'</td></tr>'
 	 
     listhtml+=listusers;
     
@@ -62,7 +78,11 @@ async function load(){
     }
 
 
+async function erase(id){
 
+    
+    return alert(id);
+}
 
 
 
