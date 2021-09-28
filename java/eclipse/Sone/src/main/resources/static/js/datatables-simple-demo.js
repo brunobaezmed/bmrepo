@@ -78,15 +78,21 @@ async function load(){
     }
 
 
-async function erase(id){
+async function erase(id,list){
    
 
+    if(confirm("Eliminar?")==false){
+        return;
+
+
+    }
 
    fetch('user/delete/'+id,{
        method:'DELETE'
    });
-
+   document.getElementById().deleterow(id);
     return alert(id);
+    
 }
 
 
