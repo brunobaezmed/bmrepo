@@ -43,15 +43,6 @@ async function load(){
     const request= await fetch('users');
 
 
-    //var myinit={method:'DELETE' };
-  
-
-    //const del=await fetch('user/delete/{id}',myinit);
-
-
-
-
-
     const users1 =  await request.json();
 
 
@@ -81,17 +72,19 @@ async function load(){
 async function erase(id,list){
    
 
-    if(confirm("Eliminar?")==false){
+    if(window.confirm('Eliminar?')==false){
         return;
 
 
     }
-
+ 
    fetch('user/delete/'+id,{
        method:'DELETE'
    });
-   document.getElementById().deleterow(id);
-    return alert(id);
+   location.reload();
+   // document.getElementById("datatablesSimple").deleteRow();
+
+    //return alert(id);
     
 }
 
