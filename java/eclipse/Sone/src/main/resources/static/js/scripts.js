@@ -53,6 +53,6 @@ async function registrar(){
 
    // body:JSON.stringify(datos);
   //  window.postMessage("Success");
-   alert("");
+   alert("You have been registered");
 
 }
