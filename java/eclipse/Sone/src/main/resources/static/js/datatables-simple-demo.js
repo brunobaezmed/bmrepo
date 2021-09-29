@@ -70,12 +70,8 @@ async function load(){
 
 
 async function erase(id,list){
-   
-
     if(window.confirm('Eliminar?')==false){
         return;
-
-
     }
  
    fetch('user/delete/'+id,{
@@ -112,3 +108,5 @@ async function erase(id,list){
     const users1 = await request.json();
     console.log(users1);
 }*/
+
+

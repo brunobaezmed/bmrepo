@@ -23,3 +23,36 @@ window.addEventListener('DOMContentLoaded', event => {
     }
 
 });
+
+async function registrar(){
+
+    let datos={};
+    datos.name=document.getElementById('inputFirstName').value;
+    datos.lastname=document.getElementById('inputLastName').value;
+    datos.password=document.getElementById('inputPassword').value;
+    datos.email=document.getElementById('inputEmail').value;
+    datos.numberphone=document.getElementById('inputNumberPhone').value;
+   /* var confirmpass=document.getElementById('inputPasswordConfirm').value;
+    if(confirmpass!=datos.password){
+        alert("Password doesn't match");
+        return;
+    }*/
+
+   const sent= fetch('user/post',{
+        
+
+        method:'POST',
+        headers:{
+
+            'Accept':'application/json',
+            'Content-Type':'application/json'
+        
+        },
+        body:JSON.stringify(datos), 
+    });
+
+   // body:JSON.stringify(datos);
+  //  window.postMessage("Success");
+   alert("");
+
+}
