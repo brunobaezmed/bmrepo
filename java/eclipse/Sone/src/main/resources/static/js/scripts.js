@@ -32,11 +32,12 @@ async function registrar(){
     datos.password=document.getElementById('inputPassword').value;
     datos.email=document.getElementById('inputEmail').value;
     datos.numberphone=document.getElementById('inputNumberPhone').value;
-   /* var confirmpass=document.getElementById('inputPasswordConfirm').value;
-    if(confirmpass!=datos.password){
+    confirmpass=document.getElementById('inputPasswordConfirm').value;
+
+    if(confirmpass != datos.password){
         alert("Password doesn't match");
         return;
-    }*/
+    }
 
    const sent= fetch('user/post',{
         

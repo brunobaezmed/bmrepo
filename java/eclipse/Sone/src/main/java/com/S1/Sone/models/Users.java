@@ -30,7 +30,7 @@ public class Users implements UsersInterface{
 	@OneToOne(targetEntity=Userstime.class,cascade=CascadeType.ALL)
 	@JoinColumn(name="id_join",referencedColumnName="id")
 	private Userstime utime;
-	
+
 	public Users(){
 		
 	}
