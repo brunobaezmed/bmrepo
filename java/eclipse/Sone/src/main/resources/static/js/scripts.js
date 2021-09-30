@@ -19,7 +19,7 @@ window.addEventListener('DOMContentLoaded', event => {
             event.preventDefault();
             document.body.classList.toggle('sb-sidenav-toggled');
             localStorage.setItem('sb|sidebar-toggle', document.body.classList.contains('sb-sidenav-toggled'));
-        });
+        }); 
     }
 
 });
@@ -34,13 +34,21 @@ async function registrar(){
     datos.numberphone=document.getElementById('inputNumberPhone').value;
     confirmpass=document.getElementById('inputPasswordConfirm').value;
 
-    if(confirmpass != datos.password){
-        alert("Password doesn't match");
-        return;
+    if(datos.name==''||datos.lastname==''||datos.email==''||datos.numberphone==''||datos.password==''){
+        console.log(datos);
+      alert("Complete fields to register"); 
+       return;
     }
 
-   const sent= fetch('user/post',{
-        
+    if(confirmpass != datos.password){
+        alert("Passwords doesn't match");
+        return;
+    }
+  
+  
+
+  fetch('user/post',{
+         
 
         method:'POST',
         headers:{
@@ -52,8 +60,34 @@ async function registrar(){
         body:JSON.stringify(datos), 
     });
 
-   // body:JSON.stringify(datos);
+ 
   //  window.postMessage("Success");
    alert("You have been registered");
 
+}
+
+
+
+async function authenticate(){
+
+    let credentials={};
+    credentials.email=document.getElementById('InputEmail').value;
+    credentials.password=document.getElementById('InputPassword').value;
+  
+   const request=  fetch('users',{
+         
+
+        method:'GET',
+        headers:{
+
+            'Accept':'application/json',
+            'Content-Type':'application/json'
+        
+        },
+        body:JSON.stringify(datos), 
+    });
+    result=await request.json();
+    
+    alert("Couldn't authenticate");
+    return;
 }

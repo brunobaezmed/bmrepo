@@ -12,6 +12,8 @@ import com.S1.Sone.models.Users;
 import com.S1.Sone.models.Userstime;
 import com.S1.Sone.repository.URepository;
 
+import de.mkammerer.argon2.Argon2;
+import de.mkammerer.argon2.Argon2Factory;
 
 
 @Service
@@ -36,6 +38,11 @@ public class UserService{
 	}
 	
 	public void save_update(Users user) {
+		Argon2 argon2 = Argon2Factory.create(Argon2Factory.Argon2Types.ARGON2id);
+		
+	
+		String hash = 	argon2.hash(2, 1024, 2, user.getPassword().toCharArray());
+		user.setPassword(hash);
 		mariadbcrud.save(user);
 	}
 	public void save_update(List<Users> users) {
