@@ -45,9 +45,6 @@ async function load(){
 
     const users1 =  await request.json();
 
-
-   // const requesdel=await fetch('user/delete/'+id);
-
     console.log(users1);
 
 	let	listhtml='';

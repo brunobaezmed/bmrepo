@@ -7,10 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import  org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.ui.Model;
 import com.S1.Sone.Services.PersonInfoService;
 import com.S1.Sone.UserService.UserService;
 import com.S1.Sone.models.PersonInfo;
@@ -39,11 +36,10 @@ public class Control1 {
     			return personservice.getbyId(id);
     			}
     @GetMapping(value="basicinfo/{id}")
-	private PersonInfo basicEspecifInfo(@PathVariable long id) {
-
+		private PersonInfo basicEspecifInfo(@PathVariable long id) {
+    	
 			return pinfoservice.getInfo(id);
 			}
-   
     
     
 
@@ -63,7 +59,7 @@ public class Control1 {
    
 	@PostMapping(value="user/post")
 		private	long ins_userID(@RequestBody Users user) {
-					
+			
 				personservice.save_update(user);
 				return user.getId();
 			}
@@ -79,6 +75,11 @@ public class Control1 {
 				return utime.getId();
 	}
 	
+	@PostMapping(value="user/cred")
+	private boolean credential(@RequestBody Users user) {
+		return personservice.Info(user);
+	
+}
 
 	
 	
