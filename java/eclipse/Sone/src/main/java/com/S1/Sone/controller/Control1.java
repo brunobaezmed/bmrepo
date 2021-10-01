@@ -36,12 +36,11 @@ public class Control1 {
     			return personservice.getbyId(id);
     			}
     @GetMapping(value="basicinfo/{id}")
-	private PersonInfo basicEspecifInfo(@PathVariable long id) {
+		private PersonInfo basicEspecifInfo(@PathVariable long id) {
     	
 			return pinfoservice.getInfo(id);
 			}
-   
-
+    
     
 
     
@@ -76,6 +75,11 @@ public class Control1 {
 				return utime.getId();
 	}
 	
+	@PostMapping(value="user/cred")
+	private boolean credential(@RequestBody Users user) {
+		return personservice.Info(user);
+	
+}
 
 	
 	

@@ -71,23 +71,31 @@ async function registrar(){
 async function authenticate(){
 
     let credentials={};
-    credentials.email=document.getElementById('InputEmail').value;
-    credentials.password=document.getElementById('InputPassword').value;
+    credentials.email=document.getElementById('inputEmail').value;
+    credentials.password=document.getElementById('inputPassword').value;
   
-   const request=  fetch('users',{
+   const request=  fetch('user/cred',{
          
 
-        method:'GET',
+        method:'POST',
         headers:{
 
             'Accept':'application/json',
             'Content-Type':'application/json'
         
         },
-        body:JSON.stringify(datos), 
+        body:JSON.stringify(credentials), 
     });
-    result=await request.json();
-    
+
+	const r=request
+  
+    if(r.toString == 'false'){
     alert("Couldn't authenticate");
-    return;
+    return location.replace("login.html");
+      }
+      console.log(r);
+    //  return location.replace("index.html");
+      
+  
+      
 }

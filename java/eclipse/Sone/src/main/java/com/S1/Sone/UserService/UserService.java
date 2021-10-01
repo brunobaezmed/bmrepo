@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.S1.Sone.UsersTimeRepository.MariadbCrud;
+import com.S1.Sone.models.PersonInfo;
 import com.S1.Sone.models.Users;
 import com.S1.Sone.models.Userstime;
 import com.S1.Sone.repository.URepository;
@@ -42,6 +43,7 @@ public class UserService{
 		
 	
 		String hash = 	argon2.hash(2, 1024, 2, user.getPassword().toCharArray());
+
 		user.setPassword(hash);
 		mariadbcrud.save(user);
 	}
@@ -68,6 +70,29 @@ public class UserService{
 		userstime.setAdded(b);
 		m.save(userstime);
 	}
+
+	
+	public boolean Info(Users cred) {
+	
+			Argon2 argon2 = Argon2Factory.create(Argon2Factory.Argon2Types.ARGON2id);
+			List<Users> u=getAll();
+			
+		    for(int l=0;l<u.size();l++) {
+		    	if(u.get(l).getEmail().equals(cred.getEmail())) {
+		    		
+		    	String passhashed=u.get(l).getPassword();
+		    		boolean result=argon2.verify(passhashed, cred.getPassword().toCharArray());
+		    		return result;	
+		    	}
+		    	
+		    }
+		
+			return false;
+	}
+	
+	
+	
+	
 
 	
 
