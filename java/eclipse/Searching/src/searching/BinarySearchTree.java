@@ -1,14 +1,13 @@
 package searching;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 
 
 
 
-public class BinarySearchTree<Key extends Comparable<Key>,Value> implements Iterable<Key>{
+public class BinarySearchTree<Key extends Comparable<Key>,Value>{
 
 	private final Key c=(Key) "-1";
 	private BinarySearchTree<Key,Value> root;
@@ -521,24 +520,8 @@ public class BinarySearchTree<Key extends Comparable<Key>,Value> implements Iter
 	
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 
-	public Iterator<Key> iterator() {
-		
-		Iterator<Key> I;
 	
-		return null;
-	}
 
 
 	public void Inorder(BinarySearchTree<Key,Value> node) {
