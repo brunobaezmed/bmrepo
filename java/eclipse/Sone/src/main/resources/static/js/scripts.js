@@ -63,6 +63,7 @@ async function registrar(){
  
   //  window.postMessage("Success");
    alert("You have been registered");
+	return location.replace("login.html")
 
 }
 
@@ -74,7 +75,7 @@ async function authenticate(){
     credentials.email=document.getElementById('inputEmail').value;
     credentials.password=document.getElementById('inputPassword').value;
   
-   const request=  fetch('user/cred',{
+   const request= await fetch('user/cred',{
          
 
         method:'POST',
@@ -87,14 +88,15 @@ async function authenticate(){
         body:JSON.stringify(credentials), 
     });
 
-	const r=request
-  
-    if(r.toString == 'false'){
+	const r=await request.text();
+    
+  	
+    if(r== 'false'){
     alert("Couldn't authenticate");
-    return location.replace("login.html");
-      }
-      console.log(r);
-    //  return location.replace("index.html");
+    return ;
+      }	
+      
+    return location.replace("index.html");
       
   
       
