@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import com.S1.Sone.Services.PersonInfoService;
 import com.S1.Sone.UserService.UserService;
+import com.S1.Sone.jwt.TokenAu;
 import com.S1.Sone.models.PersonInfo;
 import com.S1.Sone.models.Users;
 import com.S1.Sone.models.Userstime;
@@ -83,7 +84,15 @@ public class Control1  {
 }
 
 	
-
+	@PostMapping(value="authenticate")
+	 private boolean auth(@RequestBody Users user) {
+		 if(credential(user)) {
+			 TokenAu token=new TokenAu(user.getEmail());
+			 return credential(user);
+		 }
+		 else 
+		 return credential(user);
+	}
 	
 	
 	
