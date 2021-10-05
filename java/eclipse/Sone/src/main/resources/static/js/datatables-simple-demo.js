@@ -40,7 +40,12 @@ async function load(){
 async function load(){
 
 
-    const request= await fetch('users');
+    const request= await fetch('users',{
+		method: 'GET',
+		'Cache-Control':'no-store',
+		'Cache-Control':'private',
+		 
+		});
 
 
     const users1 =  await request.json();

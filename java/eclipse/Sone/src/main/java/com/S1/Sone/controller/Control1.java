@@ -2,6 +2,7 @@ package com.S1.Sone.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,7 +16,7 @@ import com.S1.Sone.models.Users;
 import com.S1.Sone.models.Userstime;
 
 @RestController
-public class Control1 {
+public class Control1  {
 	
 	@Autowired
 	private UserService personservice;
@@ -80,6 +81,8 @@ public class Control1 {
 		return personservice.Info(user);
 	
 }
+
+	
 
 	
 	

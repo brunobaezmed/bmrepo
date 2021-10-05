@@ -52,7 +52,9 @@ async function registrar(){
 
         method:'POST',
         headers:{
-
+			
+			'Cache-Control':'no-store',
+			'Cache-Control':'private',
             'Accept':'application/json',
             'Content-Type':'application/json'
         
@@ -80,7 +82,8 @@ async function authenticate(){
 
         method:'POST',
         headers:{
-
+			'Cache-Control':'no-store',
+			'Cache-Control':'private',
             'Accept':'application/json',
             'Content-Type':'application/json'
         
