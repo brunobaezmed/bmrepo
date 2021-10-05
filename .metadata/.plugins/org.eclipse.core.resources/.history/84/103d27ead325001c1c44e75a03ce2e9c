@@ -1,0 +1,15 @@
+package com.S1.Sone.jwt;
+
+import java.util.List;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.AuthorityUtils;
+
+public class TokenAu implements UsersDetailsService {
+	
+	String token;
+	String secretkey;
+	
+
+	}
+}

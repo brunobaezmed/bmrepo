@@ -1,17 +1,19 @@
 package com.S1.Sone.controller;
 import java.util.List;
 
+import javax.annotation.security.RolesAllowed;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import  org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
 import com.S1.Sone.Services.PersonInfoService;
 import com.S1.Sone.UserService.UserService;
-import com.S1.Sone.jwt.TokenAu;
+import com.S1.Sone.jwt.Auth;
 import com.S1.Sone.models.PersonInfo;
 import com.S1.Sone.models.Users;
 import com.S1.Sone.models.Userstime;
@@ -84,10 +86,11 @@ public class Control1  {
 }
 
 	
+	
 	@PostMapping(value="authenticate")
 	 private boolean auth(@RequestBody Users user) {
 		 if(credential(user)) {
-			 TokenAu token=new TokenAu(user.getEmail());
+	
 			 return credential(user);
 		 }
 		 else 

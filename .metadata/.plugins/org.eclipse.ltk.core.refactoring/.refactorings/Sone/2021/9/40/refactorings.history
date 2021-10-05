@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename method &apos;com.S1.Sone.UserService.UserService.getInfo(...)&apos; to &apos;Info&apos;&#x0A;- Original project: &apos;Sone&apos;&#x0A;- Original element: &apos;com.S1.Sone.UserService.UserService.getInfo(...)&apos;&#x0A;- Renamed element: &apos;com.S1.Sone.UserService.UserService.Info(...)&apos;&#x0A;- Update references to refactored element" delegate="false" deprecate="false" description="Rename method &apos;getInfo&apos;" flags="589830" id="org.eclipse.jdt.ui.rename.method" input="/src\/main\/java=/optional=/true=/=/maven.pomderived=/true=/&lt;com.S1.Sone.UserService{UserService.java[UserService~getInfo~QString;" name="Info" references="true" stamp="1633022142414" version="1.0"/>
+</session>
