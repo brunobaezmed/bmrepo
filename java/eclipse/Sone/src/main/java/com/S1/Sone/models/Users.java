@@ -98,6 +98,15 @@ public class Users implements UsersInterface{
 		this.utime=utime;
 	}
 
+	private String role;
+
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = "USER";
+	}
 	
 
 	

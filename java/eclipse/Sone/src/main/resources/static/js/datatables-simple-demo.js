@@ -40,7 +40,7 @@ async function load(){
 async function load(){
 
 
-    const request= await fetch('users',{
+    const request= await fetch('get/users',{
 		method: 'GET',
 		'Cache-Control':'no-store',
 		'Cache-Control':'private',

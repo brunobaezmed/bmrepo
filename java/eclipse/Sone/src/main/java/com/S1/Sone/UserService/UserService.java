@@ -5,10 +5,11 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.argon2.Argon2PasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.S1.Sone.UsersTimeRepository.MariadbCrud;
-import com.S1.Sone.models.PersonInfo;
 import com.S1.Sone.models.Users;
 import com.S1.Sone.models.Userstime;
 import com.S1.Sone.repository.URepository;
@@ -39,15 +40,22 @@ public class UserService{
 	}
 	
 	public void save_update(Users user) {
-		Argon2 argon2 = Argon2Factory.create(Argon2Factory.Argon2Types.ARGON2id);
-		
+		PasswordEncoder encoder=new Argon2PasswordEncoder(16,32,1,4096,3);
 	
-		String hash = 	argon2.hash(2, 1024, 2, user.getPassword().toCharArray());
-
+		String hash = encoder.encode(user.getPassword());
 		user.setPassword(hash);
 		mariadbcrud.save(user);
 	}
 	public void save_update(List<Users> users) {
+		PasswordEncoder encoder=new Argon2PasswordEncoder(16,32,1,4096,3);
+
+	
+		String hash="";
+		for(int z=0;z<users.size();z++) {
+			hash=users.get(z).getPassword();
+			hash=encoder.encode(hash);
+			users.get(z).setPassword(hash);
+		}
 		mariadbcrud.saveAll(users);
 	}
 	public void delete(long id) {
@@ -76,21 +84,22 @@ public class UserService{
 	
 			Argon2 argon2 = Argon2Factory.create(Argon2Factory.Argon2Types.ARGON2id);
 			List<Users> u=getAll();
-			
+	
 		    for(int l=0;l<u.size();l++) {
 		    	if(u.get(l).getEmail().equals(cred.getEmail())) {
 		    		
 		    	String passhashed=u.get(l).getPassword();
 		    		boolean result=argon2.verify(passhashed, cred.getPassword().toCharArray());
 		    		return result;	
+		    		
 		    	}
 		    	
 		    }
 		
 			return false;
 	}
-	
-	
+
+
 	
 	
 

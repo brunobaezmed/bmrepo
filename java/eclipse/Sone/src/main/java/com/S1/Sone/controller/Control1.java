@@ -1,8 +1,6 @@
 package com.S1.Sone.controller;
 import java.util.List;
 
-import javax.annotation.security.RolesAllowed;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,7 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.S1.Sone.Services.PersonInfoService;
 import com.S1.Sone.UserService.UserService;
-import com.S1.Sone.jwt.Auth;
 import com.S1.Sone.models.PersonInfo;
 import com.S1.Sone.models.Users;
 import com.S1.Sone.models.Userstime;
@@ -26,20 +23,20 @@ public class Control1  {
 	@Autowired
 	private PersonInfoService pinfoservice;
 	
-    @GetMapping(value="users/user/{id}")
+    @GetMapping(value="get/users/user/{id}")
     	private Users user(@PathVariable("id") long id) {
     			return personservice.getById(id);
     	}
-    @GetMapping(value="users")
+    @GetMapping(value="get/users")
     	private List<Users> all() {
     			return personservice.getAll();
     			}
-    @GetMapping(value="usertime/{id}")
+    @GetMapping(value="get/usertime/{id}")
 		private Userstime ins_userTime(@PathVariable long id) {
 
     			return personservice.getbyId(id);
     			}
-    @GetMapping(value="basicinfo/{id}")
+    @GetMapping(value="get/basicinfo/{id}")
 		private PersonInfo basicEspecifInfo(@PathVariable long id) {
     	
 			return pinfoservice.getInfo(id);
