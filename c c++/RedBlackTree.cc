@@ -13,7 +13,7 @@ class RedBlackTree{
 		long size;
 
 
-	void rot_left(RedBlackTree *p){
+	void rot_left(RedBlackTree *p,RedBlackTree *root){
 		
 		RedBlackTree **aux=&root;
 		if(p->root!=NULL && p->root->right==p)
@@ -30,32 +30,44 @@ class RedBlackTree{
 
 	}
 
-	void rot_right(RedBlackTree *p){
+	void rot_right(RedBlackTree *p,RedBlackTree *root){
 
 		RedBlackTree **aux=&root;
+		RedBlackTree *r=root;
 		if(p->root!=NULL && p->root->right==p)
 			aux=&(p->root->right);
-		else if(p->root!= NULL && p->root->left==p)
-			aux=&(p->root->right);
+		else if(p->root!= NULL && p->root->left== p)
+			aux=&(p->root->left);
 
 		*aux=p->left;
 		(*aux)->root=p->root;
+		p->root=*aux;
 		p->left=(*aux)->right;
 		(*aux)->right=p;
-		if(p->left!= NULL) p->left->root=p;
+
+		r->right=root;
+		r->root=root->root;
+		r->key=root->key;
+		r->value=root->value;
+		
+		
+		r->left=root->left;
+		
+		r->color=root->color;
+		//if(p->left!= NULL) p->left->root=p;
 
 
 	}
-	RedBlackTree * grandpha(RedBlackTree *n){
+	RedBlackTree *grandpha(RedBlackTree *n){
 		if((n != NULL) && (n->root != NULL))
 			return n->root->root;
 		else 
 			return NULL;
 		}
-	RedBlackTree * uncle(RedBlackTree *n){
+	RedBlackTree *uncle(RedBlackTree *n){
 
 		RedBlackTree *g=grandpha(n);
-		if(n->root == n->left)
+		if(n->root == g->left)
 			return g->right;
 		else
 			return g->left;
@@ -128,6 +140,7 @@ class RedBlackTree{
 		
 		 if(node->root->color == BLACK)
 		 	return;
+
 		RedBlackTree *un=uncle(node);
 		RedBlackTree *a;
 		if((un !=NULL) && (un->color == RED)){
@@ -135,16 +148,28 @@ class RedBlackTree{
 			un->color = BLACK;
 			a = grandpha(node);
 			a->color = RED;
-			return insert(key,value,a);
+		    insert(a->key,a->value,a);
+		 
 			}	
 		a=grandpha(node);
 		if((node == node->root->right) && (node->root == a->left)){
-			rot_left(node->root);
+			rot_left(node->root,this);
 			node=node->left;
+				
 			}
 		else if((node == node->root->left ) &&(node->root == a->right)){
-			rot_right(node->root);
+			rot_right(node->root,this);
 			node=node->right;
+			}
+		a=grandpha(node);
+		node->root->color = BLACK;
+		a->color = RED;
+		if((node == node->root->left) && (node ->root == a->left)){
+			rot_right(a,this);
+
+			}
+		else{
+			rot_left(a,this);
 			}
 
 
@@ -169,8 +194,8 @@ int main(){
 	 tree->insert(5,'m',tree);
 	 tree->insert(23,'q',tree);
      //tree->insert(37,'r',tree);
-	// cout<<tree->right->key;
-	 //tree->inorder(tree);
+	//cout<<tree->left->key;
+	tree->inorder(tree);
 	 
 	 return 0;
 }

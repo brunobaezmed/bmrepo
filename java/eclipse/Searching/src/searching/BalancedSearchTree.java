@@ -4,17 +4,14 @@ public class BalancedSearchTree <Key extends Comparable<Key>,Value> {
 	
 	private Key Key;
 	private Value value;
-	private BalancedSearchTree<Key,Value> root;
-	private BalancedSearchTree<Key,Value> left;
-	private BalancedSearchTree<Key,Value> middle;
-	private BalancedSearchTree<Key,Value> right;
+	private BalancedSearchTree<Key,Value> root,left,right;
+
 	private long size;
 	
 	public BalancedSearchTree() {
 		
 		this.root=BalancedSearchTree.this;
 		this.right=null;
-		this.middle=null;
 		this.left=null;
 		this.size=0;
 		
