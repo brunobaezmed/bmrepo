@@ -43,9 +43,7 @@ public class Auth extends WebSecurityConfigurerAdapter  {
 			http.csrf().disable();
 			http.authorizeRequests()
 				.antMatchers("/**")
-				.hasRole("ADMIN")
-				.antMatchers("/**")
-				.hasRole("USER")
+				.hasAnyRole("ADMIN","USER")
 				.anyRequest()
 				.authenticated()
 				.and()

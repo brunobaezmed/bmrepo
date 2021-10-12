@@ -45,16 +45,7 @@ class RedBlackTree{
 		p->left=(*aux)->right;
 		(*aux)->right=p;
 
-		r->right=root;
-		r->root=root->root;
-		r->key=root->key;
-		r->value=root->value;
-		
-		
-		r->left=root->left;
-		
-		r->color=root->color;
-		//if(p->left!= NULL) p->left->root=p;
+		if(p->left!= NULL) p->left->root=p;
 
 
 	}
@@ -166,7 +157,7 @@ class RedBlackTree{
 		a->color = RED;
 		if((node == node->root->left) && (node ->root == a->left)){
 			rot_right(a,this);
-
+			
 			}
 		else{
 			rot_left(a,this);
@@ -193,10 +184,9 @@ int main(){
 	 tree->insert(33,'b',tree);
 	 tree->insert(5,'m',tree);
 	 tree->insert(23,'q',tree);
-     //tree->insert(37,'r',tree);
-	//cout<<tree->left->key;
+      tree->insert(44,'r',tree);
+	
 	tree->inorder(tree);
-	 
 	 return 0;
 }
 
