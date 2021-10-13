@@ -41,8 +41,9 @@ class RedBlackTree{
 
 		RedBlackTree **aux=&root;
 		RedBlackTree *r=new RedBlackTree;
-		if(*aux!=NULL){
+		
 		*aux=p->left;
+		if(*aux!=NULL){
 		r->key =p->key;
 		r->value = p ->value;
 		r->color = p->color;
@@ -163,21 +164,22 @@ class RedBlackTree{
 			}	
 		a=grandpha(node);
 		if((node == node->root->right) && (node->root == a->left)){
-			rot_left(node->root,this);
+			rot_left(node->root,node);
 				
 			}
 		else if((node == node->root->left ) &&(node->root == a->right)){
-			rot_right(node->root,this);
+			rot_right(node->root,node);
 			}
 		a=grandpha(node);
+
 		node->root->color = BLACK;
 		a->color = RED;
 		if((node == node->root->left) && (node ->root == a->left)){
-			rot_right(a,this);
+			rot_right(a,node);
 			
 			}
 		else{
-			rot_left(a,this);
+			rot_left(a,node);
 			}
 
 
@@ -187,14 +189,14 @@ class RedBlackTree{
 
 	  	if(n == NULL ) return;
 		inorder(n->left);
-		cout<<n->key<<" value = "<<n->value<<" color= "<<n->color<<" \n";
+		cout<<n->key<<" value = "<<n->value<<" color= "<<n->color<<" root = "<<n->root<<" \n";
 		inorder(n->right);
 
   }
  void postorder(RedBlackTree *n){
 
 	  	if(n == NULL ) return;
-		cout<<n->key<<" value = "<<n->value<<" color= "<<n->color<<" \n";
+		cout<<n->key<<" value = "<<n->value<<" color= "<<n->color+"root = "<<n->root <<" \n";
 		inorder(n->left);
 		inorder(n->right);
 
@@ -208,12 +210,12 @@ int main(){
 	 tree->insert(33,'b',tree);
 	 tree->insert(5,'m',tree);
 	 tree->insert(23,'q',tree);
-     tree->insert(50,'r',tree);
-	 tree->insert(1,'s',tree);
+     tree->insert(1,'r',tree);
+	// tree->insert(1,'s',tree);
 
-	 //cout<<tree->right->key<<" "<<tree->right->color;
+  	cout<<"n "<<tree->right->key<<endl;
 	 tree->inorder(tree);
-	 //tree->postorder(tree);
+	// tree->postorder(tree);
 	 return 0;
 }
 
