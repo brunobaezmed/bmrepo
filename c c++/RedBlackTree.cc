@@ -24,15 +24,14 @@ class RedBlackTree{
 		r->value = p ->value;
 		r->color = p->color;
 		r->left= p->left;
-		r->root=*aux;
+		
 
 		p->key = (*aux)->key;
-		p->value= (*aux)->value;
+		p->value= (*aux)->value;;
 		p->right = (*aux)->right;
 		p->left=r;
+		r->root=p;
 			}
-		insert(p->key,p->value,p);
-
 
 
 	}
@@ -48,15 +47,14 @@ class RedBlackTree{
 		r->value = p ->value;
 		r->color = p->color;
 		r->right= p->right;
-		r->root=*aux;
+		
 
 		p->key = (*aux)->key;
 		p->value= (*aux)->value;
 		p->left = (*aux)->left;
 		p->right=r;
+		r->root=p;
 		}
-		insert(p->key,p->value,p);
-
 
 
 	
@@ -78,6 +76,7 @@ class RedBlackTree{
 	RedBlackTree *uncle(RedBlackTree *n){
 
 		RedBlackTree *g=grandpha(n);
+	
 		if(n->root == g->left)
 			return g->right;
 		else
@@ -164,22 +163,25 @@ class RedBlackTree{
 			}	
 		a=grandpha(node);
 		if((node == node->root->right) && (node->root == a->left)){
-			rot_left(node->root,node);
-				
+			rot_left(node->root,this);
+			node=getNode(this,node->key);
+			node=node->left;	
 			}
 		else if((node == node->root->left ) &&(node->root == a->right)){
-			rot_right(node->root,node);
+			rot_right(node->root,this);
+			node=getNode(this,node->key);
+			node=node->right;
 			}
 		a=grandpha(node);
-
+		
 		node->root->color = BLACK;
 		a->color = RED;
 		if((node == node->root->left) && (node ->root == a->left)){
-			rot_right(a,node);
+			rot_right(a,this);
 			
 			}
 		else{
-			rot_left(a,node);
+			rot_left(a,this);
 			}
 
 
@@ -202,6 +204,22 @@ class RedBlackTree{
 
   }
 
+  RedBlackTree *getNode(RedBlackTree *n,type key){
+	  if(n ->key == key){
+		  return n;
+	  }
+	  if(n->key>key){
+		  return getNode(n->left,key);
+	  }
+	  if(n->key<key){
+		  return getNode(n->right,key);
+		
+	  }
+	  
+		return NULL;
+
+  }
+
 };
 int main(){
 
@@ -210,12 +228,14 @@ int main(){
 	 tree->insert(33,'b',tree);
 	 tree->insert(5,'m',tree);
 	 tree->insert(23,'q',tree);
-     tree->insert(1,'r',tree);
-	// tree->insert(1,'s',tree);
+      tree->insert(55,'r',tree);
+	 tree->insert(2,'s',tree);
+	 tree->insert(31,'l',tree);
+	 
 
-  	cout<<"n "<<tree->right->key<<endl;
-	 tree->inorder(tree);
-	// tree->postorder(tree);
+    	cout<<"n "<<tree->left->left->key<<endl;
+	 ///tree->inorder(tree);
+	tree->postorder(tree);
 	 return 0;
 }
 
