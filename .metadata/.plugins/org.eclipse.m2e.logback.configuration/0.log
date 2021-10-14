@@ -4092,3 +4092,52 @@ org.eclipse.core.runtime.CoreException: Launch configuration SoneApplication ref
 2021-10-14 16:49:00,792 [Worker-16: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
 2021-10-14 16:49:00,792 [Worker-16: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered properties files.
 2021-10-14 16:49:00,792 [Worker-16: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/brunobaez/Documents/bmrepo/java/eclipse/Sone/src/test/resources
+2021-10-14 16:55:30,217 [Worker-20: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2021-10-14 16:55:30,217 [Worker-20: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered properties files.
+2021-10-14 16:55:30,218 [Worker-20: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2021-10-14 16:55:30,243 [Worker-20: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 21 resources
+2021-10-14 16:55:30,250 [Worker-20: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2021-10-14 16:55:30,250 [Worker-20: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered properties files.
+2021-10-14 16:55:30,250 [Worker-20: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/brunobaez/Documents/bmrepo/java/eclipse/Sone/src/test/resources
+2021-10-14 16:55:50,366 [Worker-22: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2021-10-14 16:55:50,367 [Worker-22: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered properties files.
+2021-10-14 16:55:50,369 [Worker-22: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2021-10-14 16:55:50,388 [Worker-22: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 21 resources
+2021-10-14 16:55:50,410 [Worker-22: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2021-10-14 16:55:50,410 [Worker-22: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered properties files.
+2021-10-14 16:55:50,411 [Worker-22: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/brunobaez/Documents/bmrepo/java/eclipse/Sone/src/test/resources
+2021-10-14 16:56:02,641 [Worker-23: Launching SoneApplication] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2021-10-14 16:56:02,641 [Worker-23: Launching SoneApplication] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered properties files.
+2021-10-14 16:56:02,642 [Worker-23: Launching SoneApplication] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2021-10-14 16:56:02,664 [Worker-23: Launching SoneApplication] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 21 resources
+2021-10-14 16:56:02,669 [Worker-23: Launching SoneApplication] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2021-10-14 16:56:02,669 [Worker-23: Launching SoneApplication] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered properties files.
+2021-10-14 16:56:02,669 [Worker-23: Launching SoneApplication] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/brunobaez/Documents/bmrepo/java/eclipse/Sone/src/test/resources
+2021-10-14 16:58:09,363 [Worker-23: Launching SoneApplication] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2021-10-14 16:58:09,364 [Worker-23: Launching SoneApplication] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered properties files.
+2021-10-14 16:58:09,365 [Worker-23: Launching SoneApplication] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2021-10-14 16:58:09,385 [Worker-23: Launching SoneApplication] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 21 resources
+2021-10-14 16:58:09,391 [Worker-23: Launching SoneApplication] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2021-10-14 16:58:09,391 [Worker-23: Launching SoneApplication] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered properties files.
+2021-10-14 16:58:09,391 [Worker-23: Launching SoneApplication] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/brunobaez/Documents/bmrepo/java/eclipse/Sone/src/test/resources
+2021-10-14 16:58:49,855 [Worker-27: Launching SoneApplication] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2021-10-14 16:58:49,855 [Worker-27: Launching SoneApplication] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered properties files.
+2021-10-14 16:58:49,856 [Worker-27: Launching SoneApplication] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2021-10-14 16:58:49,878 [Worker-27: Launching SoneApplication] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 21 resources
+2021-10-14 16:58:49,884 [Worker-27: Launching SoneApplication] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2021-10-14 16:58:49,884 [Worker-27: Launching SoneApplication] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered properties files.
+2021-10-14 16:58:49,885 [Worker-27: Launching SoneApplication] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/brunobaez/Documents/bmrepo/java/eclipse/Sone/src/test/resources
+2021-10-14 17:00:39,503 [Worker-20: Launching SoneApplication] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2021-10-14 17:00:39,504 [Worker-20: Launching SoneApplication] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered properties files.
+2021-10-14 17:00:39,505 [Worker-20: Launching SoneApplication] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2021-10-14 17:00:39,523 [Worker-20: Launching SoneApplication] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 21 resources
+2021-10-14 17:00:39,532 [Worker-20: Launching SoneApplication] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2021-10-14 17:00:39,532 [Worker-20: Launching SoneApplication] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered properties files.
+2021-10-14 17:00:39,532 [Worker-20: Launching SoneApplication] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/brunobaez/Documents/bmrepo/java/eclipse/Sone/src/test/resources
+2021-10-14 17:00:47,989 [Worker-20: Launching SoneApplication] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2021-10-14 17:00:47,990 [Worker-20: Launching SoneApplication] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered properties files.
+2021-10-14 17:00:47,991 [Worker-20: Launching SoneApplication] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2021-10-14 17:00:48,019 [Worker-20: Launching SoneApplication] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 21 resources
+2021-10-14 17:00:48,025 [Worker-20: Launching SoneApplication] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2021-10-14 17:00:48,025 [Worker-20: Launching SoneApplication] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered properties files.
+2021-10-14 17:00:48,025 [Worker-20: Launching SoneApplication] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/brunobaez/Documents/bmrepo/java/eclipse/Sone/src/test/resources
