@@ -27,6 +27,7 @@ public class Users implements UsersInterface{
 	private String lastname;
 	private String password;
 	private String email;
+	private String role;
 	@OneToOne(targetEntity=Userstime.class,cascade=CascadeType.ALL)
 	@JoinColumn(name="id_join",referencedColumnName="id")
 	private Userstime utime;
@@ -88,7 +89,16 @@ public class Users implements UsersInterface{
 	public void setPassword(String password) {
 		this.password = password;
 	}
+	
 
+	@Column(name="ROLE",length=5)
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
+	}
 	
 	public Userstime getutime(){
 		return utime;
@@ -98,15 +108,8 @@ public class Users implements UsersInterface{
 		this.utime=utime;
 	}
 
-	private String role;
+	
 
-	public String getRole() {
-		return role;
-	}
-
-	public void setRole(String role) {
-		this.role = "USER";
-	}
 	
 
 	
