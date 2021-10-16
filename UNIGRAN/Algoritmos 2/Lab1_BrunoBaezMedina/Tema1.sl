@@ -1,7 +1,7 @@
 //Tema1
 var 
 	vect:vector[15]numerico
-var i,c,r:numerico
+var i,r:numerico
 inicio	
 	cls()
 	i=1
@@ -33,6 +33,7 @@ subrutina imprimirVector(vect:vector[*]numerico)
 subrutina ordenarAsc(ref vect:vector[*]numerico) 
 	var i=1
 	var r=1
+	var c=0
 	inicio
 			mientras(i<alen(vect)){
 				mientras(r<alen(vect)){
