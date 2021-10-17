@@ -11,6 +11,16 @@ class RedBlackTree{
 		long  key;
 		type value;
 		long size;
+		
+		RedBlackTree(){
+			this->root=NULL;
+			this->left=NULL;
+			this->right=NULL;
+			this->color=RED;
+			this->key=NULL;
+			this->size=NULL;
+			
+		}
 
 
 	void rot_left(RedBlackTree *p,RedBlackTree *root){
@@ -29,6 +39,8 @@ class RedBlackTree{
 		p->key = (*aux)->key;
 		p->value= (*aux)->value;;
 		p->right = (*aux)->right;
+		p->color=(*aux)->color;
+
 		p->left=r;
 		r->root=p;
 			}
@@ -52,6 +64,7 @@ class RedBlackTree{
 		p->key = (*aux)->key;
 		p->value= (*aux)->value;
 		p->left = (*aux)->left;
+		p->color=(*aux)->color;
 		p->right=r;
 		r->root=p;
 		}
@@ -184,21 +197,29 @@ class RedBlackTree{
 			rot_left(a,this);
 			}
 
-
+		insert(this->key,this->value,this);
 	 
 	}
   void inorder(RedBlackTree *n){
 
 	  	if(n == NULL ) return;
 		inorder(n->left);
-		cout<<n->key<<" value = "<<n->value<<" color= "<<n->color<<" root = "<<n->root<<" \n";
+		cout<<n->key<<" value = "<<n->value<<" color= "<<n->color<<" root = ";
+		if(n->root!=NULL){
+		cout<<n->root->key<<" \n";
+			}
+		else{cout<<"NULL\n";}
 		inorder(n->right);
 
   }
  void postorder(RedBlackTree *n){
 
 	  	if(n == NULL ) return;
-		cout<<n->key<<" value = "<<n->value<<" color= "<<n->color+"root = "<<n->root <<" \n";
+		cout<<n->key<<" value = "<<n->value<<" color= "<<n->color<<" root = ";
+		if(n->root!=NULL){
+		cout<<n->root->key<<" \n";
+		}
+		else{cout<<"NULL\n";}
 		inorder(n->left);
 		inorder(n->right);
 
@@ -228,14 +249,14 @@ int main(){
 	 tree->insert(33,'b',tree);
 	 tree->insert(5,'m',tree);
 	 tree->insert(23,'q',tree);
-      tree->insert(55,'r',tree);
-	 tree->insert(2,'s',tree);
-	 tree->insert(31,'l',tree);
-	 
+         tree->insert(55,'r',tree);
+         tree->insert(98,'B',tree);
+	
 
-    	cout<<"n "<<tree->left->left->key<<endl;
+    	//cout<<"n "<<tree->left->left->key<<endl;
 	 ///tree->inorder(tree);
-	tree->postorder(tree);
+	 tree->postorder(tree);
+	
+	
 	 return 0;
 }
-
