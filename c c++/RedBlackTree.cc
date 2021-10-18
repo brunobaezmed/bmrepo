@@ -1,6 +1,9 @@
 #include<iostream>
+#include<string>
+#include<fstream>
+#include<thread>
 using namespace std;
-template < class type>
+template < class type1,class type2>
 class RedBlackTree{
 	//#define NIL = NULL
 	enum color_t {BLACK,RED};
@@ -8,8 +11,8 @@ class RedBlackTree{
 	  public:
 		RedBlackTree *root,*left,*right;
 		color_t color=RED;
-		long  key;
-		type value;
+		type1  key;
+		type2 value;
 		long size;
 		
 		RedBlackTree(){
@@ -89,7 +92,7 @@ class RedBlackTree{
 
 
 	
-	type getValue(RedBlackTree *tree,long key){
+	type2 getValue(RedBlackTree *tree,type1 key){
 		if(tree == NULL)
 			return NULL;
 		if(tree->key == key)
@@ -101,7 +104,7 @@ class RedBlackTree{
 
 
 	}
-	RedBlackTree *insertNode(RedBlackTree *n,long key,type value){
+	RedBlackTree *insertNode(RedBlackTree *n,type1 key,type2 value){
 		
 		if(n->key == NULL){
 
@@ -141,7 +144,7 @@ class RedBlackTree{
 		}
 	
 	}
-	void insert(long key,type value,RedBlackTree *node){
+	void insert(type1 key,type2 value,RedBlackTree *node){
 		
 		insertNode(node,key,value);	
 	    node=getNode(this,key);
@@ -149,7 +152,7 @@ class RedBlackTree{
 	 
 	}
 
-	void checkRBT(long key,type value,RedBlackTree *node){
+	void checkRBT(type1 key,type2 value,RedBlackTree *node){
 			if(node->root == NULL ){
 				
 			node->color=BLACK;
@@ -177,12 +180,12 @@ class RedBlackTree{
 
 		if((node == node->root->right) && (node->root == a->left)){
 			rot_left(node->root,this);
-			node=getNode(this,node->key);
+			node=getNode(node,node->key);
 			node=node->left;	
 			}
 		else if((node == node->root->left ) &&(node->root == a->right)){
 			rot_right(node->root,this);
-			node=getNode(this,node->key);
+			node=getNode(node,node->key);
 			node=node->right;
 			}
 		a=grandpha(node);
@@ -230,7 +233,7 @@ class RedBlackTree{
 
   }
 
-  RedBlackTree *getNode(RedBlackTree *n,type key){
+  RedBlackTree *getNode(RedBlackTree *n,type1 key){
 	  if(n ->key == key){
 		  return n;
 	  }
@@ -245,12 +248,53 @@ class RedBlackTree{
 		return NULL;
 
   }
+void file(const char path[]){
+	char c =' ';
+	int n =0 ;
+	int m = 0;
+	int csize=0;
+	ifstream file ;
+	file.open(path,std::ifstream::in); 
+	while(true){
 
+		while(c!='\n'&&c!=EOF){
+			c=file.get();
+			n++;
+		}
+		m++;
+		if(n>csize)csize=n;
+		if(c == EOF)break;
+		n=0;
+		c='0';
+	}
+	n=csize;
+	char list[m][n];
+
+
+	m=0;
+	file.clear();
+	file.clear(file.eofbit);
+	file.seekg(0,file.beg);
+	while(!file.eof()){
+		
+		file.getline(list[m],15);
+		m++;
+
+	}
+	for(int i=0;i<m;i++){
+		this->insert(random()+1,list[i],this);
+	}
+}
+  
 };
 int main(){
 
-	 RedBlackTree<char> *tree=new RedBlackTree<char>;	
 
+	
+
+	 RedBlackTree<int,string> *tree=new RedBlackTree<int,string>;	
+	 tree->file("FileSymbol");
+/*
 	 tree->insert(33,'b',tree);
 	 tree->insert(5,'m',tree);
 	 tree->insert(23,'q',tree);
@@ -258,7 +302,7 @@ int main(){
 	  tree->insert(98,'B',tree);
 	  tree->insert(11,'c',tree);
       cout<<"n "<<tree->root->right->key<<endl;
-	 ///tree->inorder(tree);
+	 tree->inorder(tree);*/
 	 tree->postorder(tree->root);
 	 return 0;
 }
