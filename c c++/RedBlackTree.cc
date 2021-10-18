@@ -260,6 +260,5 @@ int main(){
       cout<<"n "<<tree->root->right->key<<endl;
 	 ///tree->inorder(tree);
 	 tree->postorder(tree->root);
-	
 	 return 0;
 }
