@@ -26,14 +26,14 @@ inicio
 						}
 					}
 				}
-		}
+		
 		
 	si(band == TRUE){
 		imprimir("La matriz es simetrica")
 		sino
 		imprimir("La matriz  no es simetrica")
 		}
-
+	}
 fin
 
 	subrutina leerMat(ref mat:matriz[*,*]numerico)
@@ -84,4 +84,3 @@ fin
 		
 		retorna tr
 	fin
-
