@@ -1,5 +1,6 @@
 #include<iostream>
 using namespace std;
+//@Bruno Báez	
 int main(){
      
      float prec=0;
