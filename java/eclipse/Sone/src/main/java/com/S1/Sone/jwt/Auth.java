@@ -26,7 +26,7 @@ public class Auth extends WebSecurityConfigurerAdapter  {
 		authm.inMemoryAuthentication()
 		.withUser("serveradmin")
 		.password(passwordencoder().encode("3377"))
-		.roles("ADMIN");
+		.roles("USER","ADMIN");
 			
 		
 
@@ -39,7 +39,8 @@ public class Auth extends WebSecurityConfigurerAdapter  {
 	}
 
 	protected void configure(HttpSecurity http)throws Exception{
-		
+			http.csrf().disable();
+			
 			http.authorizeRequests()
 			.antMatchers(HttpMethod.GET,"/**")
 			.hasAnyRole("USER");
@@ -47,7 +48,7 @@ public class Auth extends WebSecurityConfigurerAdapter  {
 			http.authorizeRequests()
 				.antMatchers("/**")
 				.hasAnyRole("ADMIN");
-	
+
 			http.authorizeRequests()
 			.anyRequest()
 			.authenticated()
