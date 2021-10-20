@@ -142,13 +142,13 @@ class RedBlackTree{
 			}
 			return insertNode(n->left,key,value);
 		}
-	
+		return this;
 	}
 	void insert(type1 key,type2 value,RedBlackTree *node){
 		
 		insertNode(node,key,value);	
-	    node=getNode(this,key);
-		checkRBT(node->key,node->value,node);
+	    RedBlackTree *n=getNode(this,key);
+		checkRBT(n->key,n->value,node);
 	 
 	}
 
@@ -294,15 +294,15 @@ int main(){
 
 	 RedBlackTree<int,string> *tree=new RedBlackTree<int,string>;	
 	 tree->file("FileSymbol");
-/*
-	 tree->insert(33,'b',tree);
-	 tree->insert(5,'m',tree);
-	 tree->insert(23,'q',tree);
-      tree->insert(55,'r',tree);
-	  tree->insert(98,'B',tree);
-	  tree->insert(11,'c',tree);
-      cout<<"n "<<tree->root->right->key<<endl;
-	 tree->inorder(tree);*/
-	 tree->postorder(tree->root);
+
+	 tree->insert(33,"b6",tree);
+	 tree->insert(5,"m5",tree);
+	 tree->insert(23,"q4",tree);
+      tree->insert(55,"r2",tree);
+	  tree->insert(98,"Br",tree);
+	  tree->insert(11,"c1",tree);
+     //
+ tree->inorder(tree);
+	 //tree->postorder(tree);
 	 return 0;
 }
