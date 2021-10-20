@@ -112,6 +112,7 @@ class RedBlackTree{
 				n->value=value;
 				n->root=NULL;
 				n->color=RED;
+				this->size++;
 				return n;
 		}
 		if(n->key==key)
@@ -125,6 +126,7 @@ class RedBlackTree{
 				n2->value=value;
 				n2->root=n;
 				n2->color=RED;
+				this->size++;
 				return n;
 				}
 			return insertNode(n->right,key,value);
@@ -137,7 +139,7 @@ class RedBlackTree{
 				n2->value=value;
 				n2->root=n;
 				n2->color=RED;
-		
+				this->size++;
 				return n;
 			}
 			return insertNode(n->left,key,value);
@@ -200,7 +202,6 @@ class RedBlackTree{
 			rot_left(a,this);
 			}
 
-		//checkRBT(key,value,this);
 		}
 	}
 
@@ -284,6 +285,7 @@ void file(const char path[]){
 	for(int i=0;i<m;i++){
 		this->insert(random()+1,list[i],this);
 	}
+ 	file.close();
 }
   
 };
@@ -293,16 +295,21 @@ int main(){
 	
 
 	 RedBlackTree<int,string> *tree=new RedBlackTree<int,string>;	
-	 tree->file("FileSymbol");
-
+	 /*std::thread first(&RedBlackTree<int,string>::file,tree	,"FileSymbol");
+	 std::thread second(&RedBlackTree<int,string>::file,tree,"FileSymbol2");
+	 first.join();
+	 second.join();*/
+	 
 	 tree->insert(33,"b6",tree);
 	 tree->insert(5,"m5",tree);
 	 tree->insert(23,"q4",tree);
-      tree->insert(55,"r2",tree);
-	  tree->insert(98,"Br",tree);
-	  tree->insert(11,"c1",tree);
-     //
- tree->inorder(tree);
+     tree->insert(55,"r2",tree);
+	 tree->insert(98,"Br",tree);
+	 tree->insert(11,"c1",tree);
+     
+     tree->inorder(tree);
 	 //tree->postorder(tree);
+	 cout<<"\n"<<tree->size;
+
 	 return 0;
 }
