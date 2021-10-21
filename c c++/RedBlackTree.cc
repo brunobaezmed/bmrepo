@@ -15,13 +15,14 @@ class RedBlackTree{
 		type2 value;
 		long size;
 		
-		RedBlackTree(){
+		
+			RedBlackTree(){
 			this->root=NULL;
 			this->left=NULL;
 			this->right=NULL;
 			this->color=RED;
-			this->key=NULL;
-			this->size=NULL;
+			this->key=0;
+			this->size=0;
 			
 		}
 
@@ -104,7 +105,7 @@ class RedBlackTree{
 
 
 	}
-	RedBlackTree *insertNode(RedBlackTree *n,type1 key,type2 value){
+	void insertNode(RedBlackTree *n,type1 key,type2 value){
 		
 		if(n->key == NULL){
 
@@ -113,44 +114,95 @@ class RedBlackTree{
 				n->root=NULL;
 				n->color=RED;
 				this->size++;
-				return n;
+			
+				return ;
 		}
 		if(n->key==key)
-			return n;
+			return ;
 		
 		if(n->key<key){
 			if(n->right == NULL){
-				RedBlackTree *n2=new RedBlackTree;
-				n->right=n2;
+				RedBlackTree *n2=new RedBlackTree<type1,type2>();
 				n2->key=key;
 				n2->value=value;
 				n2->root=n;
+				n2->left=NULL;
+				n2->right=NULL;
 				n2->color=RED;
+				n->right=n2;
 				this->size++;
-				return n;
+				return ;
 				}
-			return insertNode(n->right,key,value);
+			 insertNode(n->right,key,value);
 		}
 		else if(n->key>key) {
 			if(n->left== NULL){
-				RedBlackTree *n2=new RedBlackTree;
-				n->left=n2;
+				RedBlackTree *n2=new RedBlackTree<type1,type2>();
 				n2->key=key;
 				n2->value=value;
 				n2->root=n;
+				n2->left=NULL;
+				n2->right=NULL;
 				n2->color=RED;
+				n->left=n2;
 				this->size++;
-				return n;
+				return ;
 			}
-			return insertNode(n->left,key,value);
+			 insertNode(n->left,key,value);
 		}
-		return this;
+		return;
 	}
+
+
+
+	void insertN(RedBlackTree *n,type1 key,type2 value){
+	
+		if(n->key == NULL){
+
+				n->key=key;
+				n->value=value;
+				n->root=NULL;
+				n->color=RED;
+				this->size++;
+			
+				return ;
+		}
+		RedBlackTree *nw=new RedBlackTree<type1,type2>();
+		nw->key=key;
+		nw->value=value;
+		nw->left=NULL;
+		nw->right=NULL;
+		nw->color=RED;
+		this->size++;
+
+		RedBlackTree *node=new RedBlackTree<type1,type2>();
+		RedBlackTree *root=this;
+		while(root!=NULL){
+			node=root;
+			if(nw->key<root->key)
+			root=root->left;
+			else
+			root=root->right;
+				
+		}
+		nw->root=node;
+		if(nw->key<node->key)
+			node->left=nw;
+		else node->right=nw;
+	}
+
+
+
+
+
+
+
+
 	void insert(type1 key,type2 value,RedBlackTree *node){
 		
-		insertNode(node,key,value);	
-	    RedBlackTree *n=getNode(this,key);
-		checkRBT(n->key,n->value,node);
+		insertN(node,key,value);	
+	     RedBlackTree *n=getNode(this,key);
+		checkRBT(n->key,n->value,n);
 	 
 	}
 
@@ -167,11 +219,10 @@ class RedBlackTree{
 		 	return;
 
 		RedBlackTree *un=uncle(node);
-		RedBlackTree *a=new RedBlackTree;
+		RedBlackTree *a=grandpha(node);
 		if((un !=NULL) && (un->color == RED)){
 			node->root->color = BLACK;
 			un->color = BLACK;
-			a = grandpha(node);
 			a->color = RED;
 		    checkRBT(key,value,this);
 		 
@@ -201,6 +252,7 @@ class RedBlackTree{
 		else{
 			rot_left(a,this);
 			}
+			
 
 		}
 	}
@@ -213,7 +265,14 @@ class RedBlackTree{
 
 	  	if(n == NULL ) return;
 		inorder(n->left);
-		cout<<n->key<<" value = "<<n->value<<" color= "<<n->color<<" root = ";
+		cout<<n->key<<" value = "<<n->value<<" color= ";
+		if(n->color==1){
+		cout<<"RED"<<" root = ";
+		}
+
+		else{
+		cout<<"BLACK"<<" root = ";
+		}
 		if(n->root!=NULL){
 		cout<<n->root->key<<" \n";
 			}
@@ -224,7 +283,14 @@ class RedBlackTree{
  void postorder(RedBlackTree *n){
 
 	  	if(n == NULL ) return;
-		cout<<n->key<<" value = "<<n->value<<" color= "<<n->color<<" root = ";
+		cout<<n->key<<" value = "<<n->value<<" color= ";
+		if(n->color==1){
+		cout<<"RED"<<" root = ";
+		}
+
+		else{
+		cout<<"BLACK"<<" root = ";
+		}
 		if(n->root!=NULL){
 		cout<<n->root->key<<" \n";
 		}
@@ -249,7 +315,25 @@ class RedBlackTree{
 		return NULL;
 
   }
-void file(const char path[]){
+ type1 keymin(){
+	 RedBlackTree *q=this->root;
+	 while(q->left!=NULL)
+		q=q->left;
+	  return q->key;
+	 
+ }
+  
+ type1 keymax(){
+	  RedBlackTree *q=this->root;
+	 while(q->right!=NULL)
+		q=q->right;
+	return q->key;
+	 
+ }
+};
+
+
+void file(const char path[],RedBlackTree<int,string> *tree){
 	char c =' ';
 	int n =0 ;
 	int m = 0;
@@ -269,29 +353,30 @@ void file(const char path[]){
 		c='0';
 	}
 	n=csize;
-	char list[m][n];
 
+	char *list=new char[m*n];
 
 	m=0;
 	file.clear();
 	file.clear(file.eofbit);
 	file.seekg(0,file.beg);
-	while(!file.eof()){
+	while(file.good()){
 		
-		file.getline(list[m],15);
+		file.getline((list+m*n),15,'\n');
 		m++;
 
 	}
-	for(int i=0;i<m;i++){
-		this->insert(random()+1,list[i],this);
+	for(int i=0;i<m-1;i++){
+		tree->insert(random()+1,(list+m*n),tree);
 	}
  	file.close();
-}
-  
 };
+
+
+
 int main(){
 
-
+	
 	
 
 	 RedBlackTree<int,string> *tree=new RedBlackTree<int,string>;	
@@ -299,17 +384,24 @@ int main(){
 	 std::thread second(&RedBlackTree<int,string>::file,tree,"FileSymbol2");
 	 first.join();
 	 second.join();*/
-	 
 	 tree->insert(33,"b6",tree);
 	 tree->insert(5,"m5",tree);
 	 tree->insert(23,"q4",tree);
-     tree->insert(55,"r2",tree);
+      tree->insert(55,"r2",tree);
 	 tree->insert(98,"Br",tree);
 	 tree->insert(11,"c1",tree);
-     
-     tree->inorder(tree);
-	 //tree->postorder(tree);
-	 cout<<"\n"<<tree->size;
-
+	 tree->insert(2,"mat",tree);
+	 tree->insert(31,"b1",tree);
+      tree->insert(7,"p7",tree);
+	// file("FileSymbol",tree);
+    //  tree->inorder(tree->root);
+	 tree->postorder(tree->root);
+	  
+	  
+	//  cout<<tree->keymin()<<endl;
+	//  cout<<tree->keymax()<<"\n\n";
+	//  tree->inorder(tree->root);
+	  cout<<"\n"<<tree->size;
+	  delete(tree);
 	 return 0;
 }
