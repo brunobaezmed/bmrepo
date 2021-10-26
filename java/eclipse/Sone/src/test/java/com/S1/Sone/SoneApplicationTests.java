@@ -2,16 +2,16 @@ package com.S1.Sone;
 
 
 import org.junit.jupiter.api.Test;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+
 //@SpringBootTest
 class SoneApplicationTests {
 		
 	
 		@Test
-		void testDataaccess() {	
-		
-			
-			
-			
+		void testDataaccess() {
+
 		}
 }
 	

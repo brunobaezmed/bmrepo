@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.argon2.Argon2PasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -88,19 +89,21 @@ public class UserService{
 
 			Argon2 argon2 = Argon2Factory.create(Argon2Factory.Argon2Types.ARGON2id);
 			List<Users> u=getAll();
-	
+
 		    for(int l=0;l<u.size();l++) {
 		    	if(u.get(l).getEmail().equals(cred.getEmail())) {
-		    		
+
 		    	String passhashed=u.get(l).getPassword();
 		    		boolean result=argon2.verify(passhashed, cred.getPassword().toCharArray());
-		    		if(result)
-					return URLEncoder.encode("index.html", Charset.defaultCharset());
-		    		
+		    		if(result) {
+						HttpSecurity http;
+						return "index.html";
+					}
+
 		    	}
-		    	
+
 		    }
-		
+
 			return "/error";
 	}
 

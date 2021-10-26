@@ -94,13 +94,7 @@ async function authenticate(){
 	const r=await request.text();
     
   	
-    if(r== 'false'){
-    alert("Couldn't authenticate");
-    return ;
-      }	
-       return location.replace(request.text());
-   // return location.replace("index.html");
-      
-  
+
+       return location.replace(r);
       
 }

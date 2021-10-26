@@ -10,33 +10,6 @@ window.addEventListener('DOMContentLoaded', event => {
     }
 });
 
-/*
-async function load(){
-   const request= await fetch('users')
-   .then(function(response){
-
-    const users1 =  request.json();
-    console.log(users1);
-
-	let	listhtml='';
-    for(let list of users1){
-	
-	let listusers=' <tr><td>'+list.id+'</td><td>'+list.name+'</td><td>'+list.lastname+'</td><td>'+list.numberphone+'</td></tr>'
-	 
-    listhtml+=listusers;
-
-	}
-
-    
-    document.querySelector('#datatablesSimple tbody').outerHTML=listhtml;
-    return response.blob
-})
-    .then(response => response.json())  
-    .then(data => console.log(data))
-
-
-}*/
-
 async function load(){
 
 
@@ -58,8 +31,7 @@ async function load(){
     
     for(let list of users1){
 
-    let buttonerase= '<i onclick="erase('+list.id+')"class="fas fa-user-minus"></i>' ; 
-	let listusers=' <tr><td>'+list.id+'</td><td>'+list.name+'</td><td>'+list.lastname+'</td><td>'+list.numberphone+'</td><td>'+buttonerase+'</td></tr>'
+	let listusers=' <tr><td>'+list.id+'</td><td>'+list.name+'</td><td>'+list.lastname+'</td><td>'+list.numberphone+'</td></tr>'
 	 
     listhtml+=listusers;
     
@@ -71,20 +43,8 @@ async function load(){
     }
 
 
-async function erase(id,list){
-    if(window.confirm('Eliminar?')==false){
-        return;
-    }
- 
-   fetch('user/delete/'+id,{
-       method:'DELETE'
-   });
-   location.reload();
-   // document.getElementById("datatablesSimple").deleteRow();
 
-    //return alert(id);
-    
-}
+
 
 
 
