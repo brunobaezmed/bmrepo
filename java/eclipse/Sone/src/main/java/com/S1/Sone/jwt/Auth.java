@@ -8,24 +8,21 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.argon2.Argon2PasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.servlet.ViewResolver;
-import org.springframework.web.servlet.view.ViewResolverComposite;
 @Configuration @EnableWebSecurity
 public class Auth extends WebSecurityConfigurerAdapter  {
 	@Autowired
 	private InfoAuthService userDetailService;
 	
-	public void configure(AuthenticationManagerBuilder authm)throws Exception {
+	protected void configure(AuthenticationManagerBuilder authm)throws Exception {
 		
 
 
 		
 		authm.userDetailsService(userDetailService).passwordEncoder(passwordencoder());
 		
-
+		
 		authm.inMemoryAuthentication()
 		.withUser("serveradmin")
 		.password(passwordencoder().encode("3377"))
@@ -44,18 +41,21 @@ public class Auth extends WebSecurityConfigurerAdapter  {
 	protected void configure(HttpSecurity http)throws Exception{
 			http.csrf().disable();
 			
-		
-
-			/*http.authorizeRequests()
+			http.authorizeRequests()
 			.antMatchers(HttpMethod.GET,"/**")
 			.hasAnyRole("USER");
 
 			http.authorizeRequests()
 				.antMatchers("/**")
-				.hasAnyRole("ADMIN");*/
+				.hasAnyRole("ADMIN");
 
-			/*http.authorizeRequests()
-					.antMatchers("/templates/**").authenticated();*/
-		http.authorizeRequests().anyRequest().permitAll();
+			http.authorizeRequests()
+			.anyRequest()
+			.authenticated()
+			.and()
+			.formLogin();
 	}
+
+
 }
+

@@ -98,8 +98,8 @@ async function authenticate(){
     alert("Couldn't authenticate");
     return ;
       }	
-       return location.replace(request.text());
-   // return location.replace("index.html");
+      
+    return location.replace("index.html");
       
   
       
