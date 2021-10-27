@@ -99,6 +99,9 @@ async function authenticate(){
       
 }
 async function recuperar_contr(){
+            
+   
+
      
     let email= document.getElementById('inputEmail').value;
     const request = await fetch('user/recpass',{
@@ -111,31 +114,32 @@ async function recuperar_contr(){
         body:(email),
     
     });
-    const response = await request.text();
-    if(response){
-        }
-
-
+    
+    if(request){
+        
+        document.querySelector('#messageEmail p').outerHTML="A code sent to "+email;
+            }
+    else{document.querySelector('#messageEmail p').outerHTML="Is not a valid account";}
 
     }
-
-function modal(){
-    var modal =document.getElementById("aler");
+    var btn=document.getElementById("btn");
+    var modal =document.getElementById("modal");
     var span =document.getElementsByClassName   ("close")[0];
     btn.onclick = function(){
-        modal.style.display ="block";
-
-    }
-    span.onclick = function(){
-        modal.style.display= "none";
-
-    }
-    window.onclick = function(event){
-        if(event.target == modal){
-            modal.style.display= "none";
+     modal.style.display ="block";
 
         }
+    span.onclick = function(){
+    modal.style.display= "none";
 
-    }
+        }
+    window.onclick = function(event){
+    if(event.target == modal){
+          modal.style.display= "none";
+
+            }
+    
+
+    
+
 }
-
