@@ -1,4 +1,0 @@
-	
-			http.authorizeRequests()
-			.antMatchers(HttpMethod.GET,"/**")
-			.hasAnyRole("USER");
