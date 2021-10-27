@@ -8,22 +8,25 @@ import com.S1.Sone.models.PersonInfo;
 import com.S1.Sone.models.Users;
 import com.S1.Sone.models.Userstime;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.UrlResource;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.net.MalformedURLException;
 import java.util.List;
 
-@RestController
-public class Control1  {
+@RestController@Configuration
+public class Control1 implements WebMvcConfigurer {
 	@Autowired
 	public Auth authorization;
 	@Autowired
 	private UserService personservice;
 	@Autowired
 	private PersonInfoService pinfoservice;
-
+	@Autowired
+	private InfoAuthService userDetailService;
 
 	@RequestMapping(value="/")
 		private UrlResource homepage() throws MalformedURLException {
@@ -32,10 +35,10 @@ public class Control1  {
 	}
 
 
-
-
-
-
+	@Override
+	public void addViewControllers(ViewControllerRegistry registry) {
+		registry.addViewController("/index.html").setViewName("forward:/resources/index.html");
+	}
 
 
 
@@ -59,6 +62,8 @@ public class Control1  {
     	
 			return pinfoservice.getInfo(id);
 			}
+
+
 
 
 	@DeleteMapping(value="user/delete/{id}")
@@ -89,21 +94,17 @@ public class Control1  {
 	}
 
 	@PostMapping(value="user/cred")
-	private UrlResource credential(@RequestBody Users user) throws Exception {
+		private UrlResource credential(@RequestBody Users user) throws Exception {
 
 		return authorization.Info(user);
 
    }
+   @PostMapping(value="user/recpass")
+		private boolean recuperar_con(@RequestBody String user){
 
-	
-	
-	@PostMapping(value="authenticate")
-	 private String auth(@RequestBody Users user) {
-		return "index.html";
-	}
+			return personservice.getSemail(user);
 
-	
-	
+   }
 
-	
+
 }

@@ -90,11 +90,52 @@ async function authenticate(){
         },
         body:JSON.stringify(credentials), 
     });
-
-	const r=await request.text();
     
+	const r=await request.text();
+
   	
 
-       return location.replace(r);
+      // return location.replace(r);
       
 }
+async function recuperar_contr(){
+     
+    let email= document.getElementById('inputEmail').value;
+    const request = await fetch('user/recpass',{
+        method :'POST',
+        headers : {
+             'Cache-Control':'no-store',
+             'Accept' : 'application/json',
+             'Content-Type' : 'application/json'
+         },
+        body:(email),
+    
+    });
+    const response = await request.text();
+    if(response){
+        }
+
+
+
+    }
+
+function modal(){
+    var modal =document.getElementById("aler");
+    var span =document.getElementsByClassName   ("close")[0];
+    btn.onclick = function(){
+        modal.style.display ="block";
+
+    }
+    span.onclick = function(){
+        modal.style.display= "none";
+
+    }
+    window.onclick = function(event){
+        if(event.target == modal){
+            modal.style.display= "none";
+
+        }
+
+    }
+}
+

@@ -1,24 +1,18 @@
 package com.S1.Sone.UserService;
 
-import java.net.URLEncoder;
-import java.nio.charset.Charset;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.crypto.argon2.Argon2PasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
-
 import com.S1.Sone.UsersTimeRepository.MariadbCrud;
 import com.S1.Sone.models.Users;
 import com.S1.Sone.models.Userstime;
 import com.S1.Sone.repository.URepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.argon2.Argon2PasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 
-import de.mkammerer.argon2.Argon2;
-import de.mkammerer.argon2.Argon2Factory;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.logging.Logger;
 
 
 @Service
@@ -84,31 +78,20 @@ public class UserService{
 		m.save(userstime);
 	}
 
-	
-	public String Info(Users cred) {
+	public boolean getSemail(String email){
 
-			Argon2 argon2 = Argon2Factory.create(Argon2Factory.Argon2Types.ARGON2id);
 			List<Users> u=getAll();
+			for(int l=0; l<u.size(); l++){
+				if(u.get(l).getEmail().equals(email)){
 
-		    for(int l=0;l<u.size();l++) {
-		    	if(u.get(l).getEmail().equals(cred.getEmail())) {
-
-		    	String passhashed=u.get(l).getPassword();
-		    		boolean result=argon2.verify(passhashed, cred.getPassword().toCharArray());
-		    		if(result) {
-						HttpSecurity http;
-						return "index.html";
+					return true;
 					}
+			}
+			return false;
 
-		    	}
 
-		    }
 
-			return "/error";
 	}
-
-
-	
 	
 
 	
