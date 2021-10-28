@@ -63,7 +63,6 @@ async function registrar(){
     });
 
  
-  //  window.postMessage("Success");
    alert("You have been registered");
 	return location.replace("login.html")
 
@@ -98,10 +97,11 @@ async function authenticate(){
       // return location.replace(r);
       
 }
-async function recuperar_contr(){
+async function recuperarcontr(){
             
    
-
+    var modal =document.getElementById("modal");
+    var span =document.getElementsByClassName   ("close")[0];
      
     let email= document.getElementById('inputEmail').value;
     const request = await fetch('user/recpass',{
@@ -114,32 +114,26 @@ async function recuperar_contr(){
         body:(email),
     
     });
-    
-    if(request){
-        
+    const response = await request.text();
+    if(response == 'true'){
         document.querySelector('#messageEmail p').outerHTML="A code sent to "+email;
+        modal.style.display ="block";
             }
-    else{document.querySelector('#messageEmail p').outerHTML="Is not a valid account";}
-
-    }
-    var btn=document.getElementById("btn");
-    var modal =document.getElementById("modal");
-    var span =document.getElementsByClassName   ("close")[0];
-    btn.onclick = function(){
-     modal.style.display ="block";
-
+    else{
+        modal.style.display ="block";
+        document.querySelector('#messageEmail p').outerHTML="Is not a valid account";
         }
+
+    
     span.onclick = function(){
     modal.style.display= "none";
-
+    location.reload();
         }
     window.onclick = function(event){
     if(event.target == modal){
           modal.style.display= "none";
-
+              location.reload();
             }
-    
 
-    
-
+    }
 }

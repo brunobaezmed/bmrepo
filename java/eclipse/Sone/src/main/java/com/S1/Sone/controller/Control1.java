@@ -13,12 +13,11 @@ import org.springframework.core.io.UrlResource;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-
 import java.net.MalformedURLException;
 import java.util.List;
 
-@RestController@Configuration
-public class Control1 implements WebMvcConfigurer {
+@RestController
+public class Control1 {
 	@Autowired
 	public Auth authorization;
 	@Autowired
@@ -33,15 +32,6 @@ public class Control1 implements WebMvcConfigurer {
 			return new UrlResource("http://localhost:2333/login.html");
 
 	}
-
-
-	@Override
-	public void addViewControllers(ViewControllerRegistry registry) {
-		registry.addViewController("/index.html").setViewName("forward:/resources/index.html");
-	}
-
-
-
 
 
 	@GetMapping(value="get/users/user/{id}")
@@ -94,9 +84,9 @@ public class Control1 implements WebMvcConfigurer {
 	}
 
 	@PostMapping(value="user/cred")
-		private UrlResource credential(@RequestBody Users user) throws Exception {
+		private boolean credential(@RequestBody Users user) throws Exception {
 
-		return authorization.Info(user);
+		return authorization.getJWT(user);
 
    }
    @PostMapping(value="user/recpass")
@@ -104,7 +94,6 @@ public class Control1 implements WebMvcConfigurer {
 
 			return personservice.getSemail(user);
 
-   }
 
-
+		}
 }
