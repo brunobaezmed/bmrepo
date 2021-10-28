@@ -6,6 +6,8 @@
     // 
 // Scripts
 // 
+
+
 window.addEventListener('DOMContentLoaded', event => {
 
     // Toggle the side navigation
@@ -90,11 +92,34 @@ async function authenticate(){
         body:JSON.stringify(credentials), 
     });
     
-	const r=await request.text();
+	var accesstoken = 'Bearer '+request.headers.get('access_token');
+    var refreshtoken = request.headers.get('refresh_token');
+    const url = '/index.html';
+    var Mheaders = new Headers();
+    Mheaders.append( 'Access-Control-Allow-Origin', '*');
+    Mheaders.append('Authorization',accesstoken);
+    Mheaders.append('Cache-Control','no-store');
+    Mheaders.append('Accept','application/json');
+    Mheaders.append('Accept','text/html');
+    Mheaders.append('Content-Type','application/json');
+    Mheaders.append('Content-Type','text/plain');
+  
+  
 
-  	
+    
+    var req = new Request(url,{
+        method : 'GET',
+        headers : Mheaders,
+        credentials: "include",
+    });
+    //console.log(request.headers.get("access_token"));
 
-      // return location.replace(r);
+    fetch(url,req).then(function(foward){
+      console.log(foward.url);
+      location.assign(foward.url,)
+        
+    });
+    
       
 }
 async function recuperarcontr(){

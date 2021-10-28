@@ -2,8 +2,11 @@ package com.S1.Sone.jwt;
 
 import com.S1.Sone.UserService.UserService;
 import com.S1.Sone.models.Users;
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.algorithms.Algorithm;
 import de.mkammerer.argon2.Argon2;
 import de.mkammerer.argon2.Argon2Factory;
+import org.bouncycastle.math.ec.rfc8032.Ed25519;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,11 +18,14 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.annotation.web.configurers.oauth2.server.resource.OAuth2ResourceServerConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.argon2.Argon2PasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.header.HeaderWriter;
 
@@ -28,6 +34,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 import java.io.Console;
 import java.net.MalformedURLException;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 @Configuration @EnableWebSecurity
@@ -51,11 +61,10 @@ public class Auth extends WebSecurityConfigurerAdapter  {
 
 
 		authm.userDetailsService(userDetailService).passwordEncoder(passwordencoder());
-		authm.inMemoryAuthentication().withUser("serveradmin").password(passwordencoder()
-				.encode("3377")).roles("ADMIN","USER");
+
 	}
-	
-	
+
+
 	@Bean
 	public PasswordEncoder passwordencoder() {
 		return new Argon2PasswordEncoder(16,32,1,4096,3);
@@ -64,15 +73,18 @@ public class Auth extends WebSecurityConfigurerAdapter  {
 
 	protected void configure(HttpSecurity http)throws Exception {
 		http.csrf().disable();
+		http.cors().disable();
 
-		UsernamePasswordAuthenticationFilter usernamefilter =new UsernamePasswordAuthenticationFilter();
 		/*http.authorizeRequests()
 				.antMatchers("/home.html")
 						.hasAnyRole("ADMIN","USER").and().formLogin();*/
 		http.authorizeRequests().antMatchers("/user/cred","/login.html","/js/**","/css/**","/")
-				.permitAll();
+				.authenticated().and().formLogin();
+		/*http.authorizeRequests().anyRequest().authenticated().and().sessionManagement()
+				.sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().formLogin().disable();
+		http.addFilterBefore(new AuthorizationFilter(),UsernamePasswordAuthenticationFilter.class);
+*/
 		http.authorizeRequests().anyRequest().authenticated();
-
 	}
 	public UrlResource Info(Users cred)  {
 		Argon2 argon2 = Argon2Factory.create(Argon2Factory.Argon2Types.ARGON2id);
@@ -97,13 +109,33 @@ public class Auth extends WebSecurityConfigurerAdapter  {
 		Authentication token= new UsernamePasswordAuthenticationToken(u.getEmail(),u.getPassword());
 
 		 Authentication auth =authenticationManager().authenticate(token);
-
 			if(auth.isAuthenticated()){
-			new org.springframework.security.core.userdetails.User(u.getEmail(),u.getPassword(),userDetailService.loadUserByUsername(u.getEmail()).getAuthorities());
+				Users uauth=personservice.getGemail(u.getEmail());
+				Collection<SimpleGrantedAuthority> grantedAuthorityCollection = new ArrayList<>();
+				grantedAuthorityCollection.add(new SimpleGrantedAuthority(uauth.getRole()));
+
+				new org.springframework.security.core.userdetails.User(u.getEmail(),u.getPassword(),grantedAuthorityCollection);
+
+				Algorithm algorithm = Algorithm.HMAC256("secret".getBytes(StandardCharsets.UTF_8));
+
+				String access_token = JWT.create()
+						.withSubject(uauth.getEmail())
+						.withExpiresAt(new Date(System.currentTimeMillis()+10*60*1000))
+						.withIssuer(request.getRequestURL().toString())
+						.withClaim("ROLE",uauth.getRole())
+						.sign(algorithm);
+				String refresh_token = JWT.create()
+						.withSubject(uauth.getEmail())
+						.withExpiresAt(new Date(System.currentTimeMillis()+30*60*1000))
+						.withIssuer(request.getRequestURL().toString())
+						.sign(algorithm);
+				response.setHeader("access_token",access_token);
+				response.setHeader("refresh_token",refresh_token);
+
+				return true;
 
 
-
-				return true;}
+			}
 			else return false;
 	}
 

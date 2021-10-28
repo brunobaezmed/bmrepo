@@ -4,7 +4,10 @@ import com.S1.Sone.UsersTimeRepository.MariadbCrud;
 import com.S1.Sone.models.Users;
 import com.S1.Sone.models.Userstime;
 import com.S1.Sone.repository.URepository;
+import org.hibernate.cfg.annotations.Nullability;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.lang.Nullable;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.argon2.Argon2PasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -90,13 +93,28 @@ public class UserService{
 			return false;
 
 
+	}
+
+	public Users getGemail(String email){
+
+		List<Users> u=getAll();
+		for(int l=0; l<u.size(); l++){
+			if(u.get(l).getEmail().equals(email)){
+
+				return u.get(l);
+			}
+		}
+
+		return null;
+
 
 	}
-	
-
-	
 
 
 
-	
+
+
+
+
+
 }
