@@ -1,7 +1,5 @@
 package com.S1.Sone.UserService;
 
-import java.net.URLEncoder;
-import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -84,8 +82,8 @@ public class UserService{
 	}
 
 	
-	public String Info(Users cred) {
-
+	public boolean Info(Users cred) {
+	
 			Argon2 argon2 = Argon2Factory.create(Argon2Factory.Argon2Types.ARGON2id);
 			List<Users> u=getAll();
 	
@@ -94,14 +92,13 @@ public class UserService{
 		    		
 		    	String passhashed=u.get(l).getPassword();
 		    		boolean result=argon2.verify(passhashed, cred.getPassword().toCharArray());
-		    		if(result)
-					return URLEncoder.encode("index.html", Charset.defaultCharset());
+		    		return result;	
 		    		
 		    	}
 		    	
 		    }
 		
-			return "/error";
+			return false;
 	}
 
 
