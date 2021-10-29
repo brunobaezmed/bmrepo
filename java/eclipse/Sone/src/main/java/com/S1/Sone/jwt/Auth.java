@@ -79,8 +79,10 @@ public class Auth extends WebSecurityConfigurerAdapter  {
 		http.authorizeRequests()
 				.antMatchers("/home.html")
 						.hasAnyRole("ADMIN","USER");
-		http.authorizeRequests().antMatchers("/user/cred","/login.html","/js/**","/css/**","/","/error/*")
-				.permitAll();
+		http.authorizeRequests().antMatchers("/user/cred","/login.html","/js/**","/css/**","/","/error/*","/password.html"
+						,"/register.html","/user/recpass","/user/post")
+						.permitAll();
+
 		http.authorizeRequests().anyRequest().authenticated().and().formLogin().disable();
 		http.addFilterAfter(new AuthorizationFilter(),UsernamePasswordAuthenticationFilter.class);
 

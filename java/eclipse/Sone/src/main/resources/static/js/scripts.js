@@ -6,6 +6,11 @@
     // 
 // Scripts
 // 
+const entlog = document.getElementById("inputPassword");
+const entReg= document.getElementById("inputPasswordConfirm");
+const entRecPass= document.getElementById("inputemail");
+const loginpage = 'login.html';
+const url = '/index.html';
 
 
 window.addEventListener('DOMContentLoaded', event => {
@@ -26,6 +31,37 @@ window.addEventListener('DOMContentLoaded', event => {
   
 
 });
+window.addEventListener('keydown', (event) => {
+   
+         
+    if(event.key === "Enter" && entReg != null ){
+    
+        registrar();
+        console.log("pressed"+event.key+"on registrar");
+        return;
+   }
+    
+    
+    if(event.key === "Enter" && entlog != null ){ 
+    
+         authenticate();
+         console.log("pressed"+event.key+"on log");
+         return;
+    }
+
+    if(event.key === "Enter" && entRecPass != null){
+        
+        recuperarcontr();
+        console.log("pressed"+event.key+"on password");
+        return;
+    }
+    
+    
+  
+
+});
+
+    
 
 
 
@@ -34,12 +70,9 @@ window.addEventListener('DOMContentLoaded', event => {
 
 
 
-
-
-const loginpage = 'login.html';
-const url = '/index.html';
 
 async function registrar(){
+    
 
     let datos={};
     datos.name=document.getElementById('inputFirstName').value;
@@ -87,6 +120,9 @@ async function registrar(){
 
 async function authenticate(){
 
+    let modal = document.getElementById('modal');
+    let span = document.getElementsByClassName('close')[0];    
+
     let credentials={};
     credentials.email=document.getElementById('inputEmail').value;
     credentials.password=document.getElementById('inputPassword').value;
@@ -104,11 +140,26 @@ async function authenticate(){
         },
         body:JSON.stringify(credentials), 
     });
+    
     console.log(request.status);
+
     if(request.status == 403){
-        alert("Password or email incorrect");
-        return;
+    
+        //document.querySelector('#message').innerHTML = 'Email or Password incorrect';
+        modal.style.display = 'block';
+
+        span.onclick = function(event){
+            modal.style.display = 'none';
         }
+        window.onclick = function(event){
+          if(event.target == modal){
+            modal.style.display = 'none';
+                 }
+            }
+            return;
+        }
+    
+
   	var accesstoken = 'Bearer '+request.headers.get('access_token');
     var refreshtoken = request.headers.get('refresh_token');
    
@@ -145,10 +196,11 @@ async function authenticate(){
 async function recuperarcontr(){
             
    
-    var modal =document.getElementById("modal");
-    var span =document.getElementsByClassName   ("close")[0];
+    let modal =document.getElementById("modal");
+    let span =document.getElementsByClassName   ("close")[0];
      
-    let email= document.getElementById('inputEmail').value;
+    let email= document.getElementById('inputemail').value;
+   
     const request = await fetch('user/recpass',{
         method :'POST',
         headers : {
@@ -160,26 +212,29 @@ async function recuperarcontr(){
     
     });
     const response = await request.text();
+
     if(response == 'true'){
-        document.querySelector('#messageEmail p').outerHTML="A code sent to "+email;
+        document.querySelector('#modal h2').innerHTML ='Sucess';
+        document.querySelector('#modal p').innerHTML="A code sent to "+email;
         modal.style.display ="block";
             }
     else{
         modal.style.display ="block";
-        document.querySelector('#messageEmail p').outerHTML="Is not a valid account";
+     
         }
 
     
     span.onclick = function(){
     modal.style.display= "none";
-    location.reload();
+    //location.reload();
         }
     window.onclick = function(event){
     if(event.target == modal){
           modal.style.display= "none";
-              location.reload();
+             // location.reload();
             }
 
-    }
+        }
+   
    }
-
+    
