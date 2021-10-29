@@ -13,8 +13,8 @@ window.addEventListener('DOMContentLoaded', event => {
     // Toggle the side navigation
     const sidebarToggle = document.body.querySelector('#sidebarToggle');
     if (sidebarToggle) {
-        // Uncomment Below to persist sidebar toggle between refreshes
-        // if (localStorage.getItem('sb|sidebar-toggle') === 'true') {
+            // Uncomment  Below to persist sidebar toggle between refreshes
+            // if (localStorage.getItem('sb|sidebar-toggle') === 'true') {
         //     document.body.classList.toggle('sb-sidenav-toggled');
         // }
         sidebarToggle.addEventListener('click', event => {
@@ -23,8 +23,12 @@ window.addEventListener('DOMContentLoaded', event => {
             localStorage.setItem('sb|sidebar-toggle', document.body.classList.contains('sb-sidenav-toggled'));
         }); 
     }
+  
 
 });
+
+
+const loginpage = 'login.html';
 
 async function registrar(){
 
@@ -66,7 +70,7 @@ async function registrar(){
 
  
    alert("You have been registered");
-	return location.replace("login.html")
+	return location.replace(loginpage)
 
 }
 
@@ -91,33 +95,41 @@ async function authenticate(){
         },
         body:JSON.stringify(credentials), 
     });
-    
-	var accesstoken = 'Bearer '+request.headers.get('access_token');
+    console.log(request.status);
+    if(request.status == 403){
+        alert("Password incorrect");
+        return;
+        }
+  	var accesstoken = 'Bearer '+request.headers.get('access_token');
     var refreshtoken = request.headers.get('refresh_token');
     const url = '/index.html';
     var Mheaders = new Headers();
-    Mheaders.append( 'Access-Control-Allow-Origin', '*');
+
     Mheaders.append('Authorization',accesstoken);
-    Mheaders.append('Cache-Control','no-store');
+   // Mheaders.append('Cache-Control','no-store');
     Mheaders.append('Accept','application/json');
     Mheaders.append('Accept','text/html');
     Mheaders.append('Content-Type','application/json');
     Mheaders.append('Content-Type','text/plain');
-  
-  
-
+    
+    
+    
+    localStorage.setItem('Autorization',accesstoken);
     
     var req = new Request(url,{
         method : 'GET',
-        headers : Mheaders,
-        credentials: "include",
+        headers: Mheaders,
+        redirect: "follow",
+        keepalive : true,
+        
     });
     //console.log(request.headers.get("access_token"));
 
-    fetch(url,req).then(function(foward){
-      console.log(foward.url);
-      location.assign(foward.url,)
-        
+    let fow=await fetch(url,req).then(function(res){
+            if(res.status == 403){
+                location.replace(loginpage)
+                }
+           location.replace(req.url);
     });
     
       

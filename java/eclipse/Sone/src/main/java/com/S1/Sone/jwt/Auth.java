@@ -61,7 +61,8 @@ public class Auth extends WebSecurityConfigurerAdapter  {
 
 
 		authm.userDetailsService(userDetailService).passwordEncoder(passwordencoder());
-
+		authm.inMemoryAuthentication().withUser("admin")
+				.password(passwordencoder().encode("3377")).roles("ADMIN","USER");
 	}
 
 
@@ -74,17 +75,16 @@ public class Auth extends WebSecurityConfigurerAdapter  {
 	protected void configure(HttpSecurity http)throws Exception {
 		http.csrf().disable();
 		http.cors().disable();
-
-		/*http.authorizeRequests()
+		http.authorizeRequests().antMatchers("/user/delete/**").hasAnyRole("ADMIN","USER");
+		http.authorizeRequests()
 				.antMatchers("/home.html")
-						.hasAnyRole("ADMIN","USER").and().formLogin();*/
-		http.authorizeRequests().antMatchers("/user/cred","/login.html","/js/**","/css/**","/")
-				.authenticated().and().formLogin();
-		/*http.authorizeRequests().anyRequest().authenticated().and().sessionManagement()
-				.sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().formLogin().disable();
-		http.addFilterBefore(new AuthorizationFilter(),UsernamePasswordAuthenticationFilter.class);
-*/
-		http.authorizeRequests().anyRequest().authenticated();
+						.hasAnyRole("ADMIN","USER");
+		http.authorizeRequests().antMatchers("/user/cred","/login.html","/js/**","/css/**","/","/error/*")
+				.permitAll();
+		http.authorizeRequests().anyRequest().authenticated().and().formLogin().disable();
+		http.addFilterAfter(new AuthorizationFilter(),UsernamePasswordAuthenticationFilter.class);
+
+		//http.authorizeRequests().anyRequest().authenticated().and().formLogin();
 	}
 	public UrlResource Info(Users cred)  {
 		Argon2 argon2 = Argon2Factory.create(Argon2Factory.Argon2Types.ARGON2id);
@@ -104,7 +104,7 @@ public class Auth extends WebSecurityConfigurerAdapter  {
 	}
 
 
-	public Boolean getJWT(Users u) throws Exception {
+	public boolean getJWT(Users u) throws Exception {
 
 		Authentication token= new UsernamePasswordAuthenticationToken(u.getEmail(),u.getPassword());
 
@@ -132,11 +132,11 @@ public class Auth extends WebSecurityConfigurerAdapter  {
 				response.setHeader("access_token",access_token);
 				response.setHeader("refresh_token",refresh_token);
 
-				return true;
 
+			return true;
 
 			}
-			else return false;
+		return false;
 	}
 
 
