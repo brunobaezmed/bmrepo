@@ -28,7 +28,16 @@ window.addEventListener('DOMContentLoaded', event => {
 });
 
 
+
+
+
+
+
+
+
+
 const loginpage = 'login.html';
+const url = '/index.html';
 
 async function registrar(){
 
@@ -97,12 +106,12 @@ async function authenticate(){
     });
     console.log(request.status);
     if(request.status == 403){
-        alert("Password incorrect");
+        alert("Password or email incorrect");
         return;
         }
   	var accesstoken = 'Bearer '+request.headers.get('access_token');
     var refreshtoken = request.headers.get('refresh_token');
-    const url = '/index.html';
+   
     var Mheaders = new Headers();
 
     Mheaders.append('Authorization',accesstoken);
@@ -123,7 +132,6 @@ async function authenticate(){
         keepalive : true,
         
     });
-    //console.log(request.headers.get("access_token"));
 
     let fow=await fetch(url,req).then(function(res){
             if(res.status == 403){
@@ -173,4 +181,5 @@ async function recuperarcontr(){
             }
 
     }
-}
+   }
+
