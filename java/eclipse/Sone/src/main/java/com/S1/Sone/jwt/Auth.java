@@ -7,7 +7,6 @@ import com.auth0.jwt.algorithms.Algorithm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.io.UrlResource;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -16,13 +15,9 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.argon2.Argon2PasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.session.SessionInformationExpiredEvent;
-import org.springframework.security.web.session.SessionInformationExpiredStrategy;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -34,8 +29,7 @@ import java.util.Date;
 
 @Configuration @EnableWebSecurity
 public class Auth extends WebSecurityConfigurerAdapter  {
-	final public UrlResource index=new UrlResource("http://localhost:2333/index.html");
-	final public UrlResource error= new UrlResource("http://localhost:2333/error");
+
 	@Autowired
 	private UserService personservice;
 	@Autowired
@@ -72,11 +66,12 @@ public class Auth extends WebSecurityConfigurerAdapter  {
 		http.authorizeRequests().antMatchers("/user/cred"
 						,"/login.html","/js/**","/css/**","/","/error/*","/password.html"
 						,"/register.html","/user/recpass","/user/post"
-					,"/assets/**","/users/post")
+					,"/assets/**")
 						.permitAll();
 
 		http.authorizeRequests().anyRequest().hasAnyAuthority("USER",principal).and().formLogin().disable();
 		http.addFilterBefore(new AuthorizationFilter(),UsernamePasswordAuthenticationFilter.class);
+	    http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
 
 	}
@@ -88,7 +83,7 @@ public class Auth extends WebSecurityConfigurerAdapter  {
 
 		 Authentication auth =authenticationManager().authenticate(token);
 
-		 	if(auth.isAuthenticated()){
+		 	if(auth.isAuthenticated() ){
 				Users uauth=personservice.getGemail(u.getEmail());
 				Collection<SimpleGrantedAuthority> grantedAuthorityCollection = new ArrayList<>();
 				grantedAuthorityCollection.add(new SimpleGrantedAuthority(uauth.getRole()));

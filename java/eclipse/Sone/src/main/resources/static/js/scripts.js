@@ -6,11 +6,7 @@
 // 
 // Scripts
 // 
-const entlog = document.getElementById("inputPassword");
-const entReg = document.getElementById("inputPasswordConfirm");
-const entRecPass = document.getElementById("inputemail");
-const loginpage = 'login.html';
-const url = '/index.html';
+
 
 
 window.addEventListener('DOMContentLoaded', event => {
@@ -33,6 +29,10 @@ window.addEventListener('DOMContentLoaded', event => {
 });
 
 window.addEventListener('keydown', (event) => {
+
+    const entlog = document.getElementById("inputPassword");
+    const entReg = document.getElementById("inputPasswordConfirm");
+    const entRecPass = document.getElementById("inputemail");
 
     if (event.key === "Enter" && entReg != null) {
 
@@ -99,7 +99,7 @@ async function registrar() {
 
 
     alert("You have been registered");
-    return location.replace(loginpage)
+    return location.replace('login.html')
 
 }
 
@@ -146,23 +146,21 @@ async function authenticate() {
 
 
     var accesstoken = 'Bearer ' + request.headers.get('access_token');
-    var refreshtoken = request.headers.get('refresh_token');
+    var refreshtoken = 'Bearer ' + request.headers.get('refresh_token');
 
     let Mheaders = new Headers();
 
     Mheaders.append('Authorization', accesstoken);
-    // Mheaders.append('Cache-Control','no-store');
     Mheaders.append('Accept', 'application/json');
     Mheaders.append('Accept', 'text/html');
     Mheaders.append('Content-Type', 'application/json');
     Mheaders.append('Content-Type', 'text/plain');
     Mheaders.append('Accept', 'application/xhtml+xml')
-    /*  Mheaders.append('Accept',,application/xml;q=0.9,image/avif,image/webp,q=0.8) */
 
 
     localStorage.setItem('Authorization', accesstoken);
-    localStorage.setItem('Authorization2',refreshtoken);
-    let req = new Request(url, {
+    localStorage.setItem('Authorization2', refreshtoken);
+    let req = new Request('/index.html', {
         method: 'GET',
         headers: Mheaders,
         keepalive: true,
@@ -180,7 +178,7 @@ async function authenticate() {
     document.write(html);
     document.close();
     document.URL = 'index.html'
- 
+
     req = new Request('get/users', {
         method: 'GET',
         headers: Mheaders,
@@ -256,22 +254,22 @@ async function recuperarcontr() {
 
 
 }
-/*async function logout() {
+async function logout() {
 
 
     const req = await fetch("/logout")
     if (req.status == 403) {
-        location.replace(loginpage);
+        location.replace('/login.html');
 
     }
     else {
 
     }
 
-}*/
+}
 
-async function char(){
-    
+async function tab() {
+
     let Mheaders = new Headers();
 
     Mheaders.append('Authorization', localStorage.getItem('Authorization'));
@@ -280,50 +278,50 @@ async function char(){
     Mheaders.append('Content-Type', 'application/json');
     Mheaders.append('Content-Type', 'text/plain');
     Mheaders.append('Accept', 'application/xhtml+xml')
-    
-    let req = new Request('/tab.html',{
-            method: 'GET',
-            headers :Mheaders,
-            keepalive: true,
+
+    let req = new Request('/tab.html', {
+        method: 'GET',
+        headers: Mheaders,
+        keepalive: true,
     });
-    
-    let request = await fetch(req).then((res) =>{
-        if(res.status == 403){        
-            Mheaders.set('Authorization',localStorage.get('Authorization2'));
+
+    let request = await fetch(req).then((res) => {
+        if (res.status == 403) {
+            Mheaders.set('Authorization', localStorage.get('Authorization2'));
             return res;
         }
         else {
-        return res.text();
+            return res.text();
         }
-    
-  
-    }).catch( (e)=>{
+
+
+    }).catch((e) => {
         console.log(e);
 
     });
-           
+
     let html = request;
     document.open();
     document.write(html);
     document.close();
-    document.URL= 'tab.html'
-    
-    req = new Request('/get/users',{
+    document.URL = 'tab.html'
+
+    req = new Request('/get/users', {
         method: 'GET',
-        headers :Mheaders,
+        headers: Mheaders,
         keepalive: true,
-        });
-
-
-    request = await fetch(req)
-    .catch(e => {
-        console.log(e);
     });
 
 
-  const users1 = await request.json();
+    request = await fetch(req)
+        .catch(e => {
+            console.log(e);
+        });
 
-  let listhtml = '';
+
+    const users1 = await request.json();
+
+    let listhtml = '';
 
 
 
@@ -339,46 +337,115 @@ async function char(){
     document.querySelector('#datatablesSimple tbody').outerHTML = listhtml;
     console.log('0');
 
-    }
+}
 
 
-    async function tab(){
-    
-        let Mheaders = new Headers();
-    
-        Mheaders.append('Authorization', localStorage.getItem('Authorization'));
-        Mheaders.append('Accept', 'application/json');
-        Mheaders.append('Accept', 'text/html');
-        Mheaders.append('Content-Type', 'application/json');
-        Mheaders.append('Content-Type', 'text/plain');
-        Mheaders.append('Accept', 'application/xhtml+xml')
-        
-        let req = new Request('/char.html',{
-                method: 'GET',
-                headers :Mheaders,
-                keepalive: true,
-        });
-        
-        let request = await fetch(req).then((res) =>{
-            if(res.status == 403){        
-                Mheaders.set('Authorization',localStorage.get('Authorization2'));
-                return res;
-            }
-            else {
+async function char() {
+
+    let Mheaders = new Headers();
+
+    Mheaders.append('Authorization', localStorage.getItem('Authorization'));
+    Mheaders.append('Accept', 'application/json');
+    Mheaders.append('Accept', 'text/html');
+    Mheaders.append('Content-Type', 'application/json');
+    Mheaders.append('Content-Type', 'text/plain');
+    Mheaders.append('Accept', 'application/xhtml+xml')
+
+    let req = new Request('/char.html', {
+        method: 'GET',
+        headers: Mheaders,
+        keepalive: true,
+    });
+
+    let request = await fetch(req).then((res) => {
+        if (res.status == 403) {
+            Mheaders.set('Authorization', localStorage.get('Authorization2'));
+            return res;
+        }
+        else {
             return res.text();
-            }
-        
-      
-        }).catch( (e)=>{
-            console.log(e);
-    
-        });
-               
-        let html = request;
-        document.open();
-        document.write(html);
-        document.close();
-        document.URL= 'char.html';
-    
         }
 
+
+    }).catch((e) => {
+        console.log(e);
+
+    });
+
+    let html = request;
+    document.open();
+    document.write(html);
+    document.close();
+    document.URL = 'char.html';
+
+}
+async function homepage() {
+
+    let Mheaders = new Headers();
+    Mheaders.append('Authorization', localStorage.getItem('Authorization'));
+    Mheaders.append('Accept', 'application/json');
+    Mheaders.append('Accept', 'text/html');
+    Mheaders.append('Content-Type', 'application/json');
+    Mheaders.append('Content-Type', 'text/plain');
+    Mheaders.append('Accept', 'application/xhtml+xml')
+
+    let req = new Request('/index.html', {
+        method: 'GET',
+        headers: Mheaders,
+        keepalive: true,
+    });
+
+    let request = await fetch(req).then((res) => {
+        if (res.status == 403) {
+            Mheaders.set('Authorization', localStorage.get('Authorization2'));
+            return res;
+        }
+        else {
+            return res.text();
+        }
+
+
+    }).catch((e) => {
+        console.log(e);
+
+    });
+
+    let html = request;
+    document.open();
+    document.write(html);
+    document.close();
+    document.URL = 'index.html'
+
+    req = new Request('/get/users', {
+        method: 'GET',
+        headers: Mheaders,
+        keepalive: true,
+    });
+
+
+    request = await fetch(req)
+        .catch(e => {
+            console.log(e);
+        });
+
+
+    const users1 = await request.json();
+
+    let listhtml = '';
+
+
+
+    for (let list of users1) {
+
+        let listusers = ' <tr><td>' + list.id + '</td><td>' + list.name + '</td><td>' + list.lastname + '</td><td>' + list.numberphone + '</td></tr>'
+
+        listhtml += listusers;
+
+
+    }
+
+    document.querySelector('#datatablesSimple tbody').outerHTML = listhtml;
+    console.log('0');
+
+
+}
