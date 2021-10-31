@@ -3,12 +3,12 @@
     * Copyright 2013-2021 Start Bootstrap
     * Licensed under MIT (https://github.com/StartBootstrap/startbootstrap-sb-admin/blob/master/LICENSE)
     */
-    // 
+// 
 // Scripts
 // 
 const entlog = document.getElementById("inputPassword");
-const entReg= document.getElementById("inputPasswordConfirm");
-const entRecPass= document.getElementById("inputemail");
+const entReg = document.getElementById("inputPasswordConfirm");
+const entRecPass = document.getElementById("inputemail");
 const loginpage = 'login.html';
 const url = '/index.html';
 
@@ -18,223 +18,367 @@ window.addEventListener('DOMContentLoaded', event => {
     // Toggle the side navigation
     const sidebarToggle = document.body.querySelector('#sidebarToggle');
     if (sidebarToggle) {
-            // Uncomment  Below to persist sidebar toggle between refreshes
-            // if (localStorage.getItem('sb|sidebar-toggle') === 'true') {
+        // Uncomment  Below to persist sidebar toggle between refreshes
+        // if (localStorage.getItem('sb|sidebar-toggle') === 'true') {
         //     document.body.classList.toggle('sb-sidenav-toggled');
         // }
         sidebarToggle.addEventListener('click', event => {
             event.preventDefault();
             document.body.classList.toggle('sb-sidenav-toggled');
             localStorage.setItem('sb|sidebar-toggle', document.body.classList.contains('sb-sidenav-toggled'));
-        }); 
+        });
     }
-  
+
 
 });
+
 window.addEventListener('keydown', (event) => {
-   
-         
-    if(event.key === "Enter" && entReg != null ){
-    
+
+    if (event.key === "Enter" && entReg != null) {
+
         registrar();
-        console.log("pressed"+event.key+"on registrar");
         return;
-   }
-    
-    
-    if(event.key === "Enter" && entlog != null ){ 
-    
-         authenticate();
-         console.log("pressed"+event.key+"on log");
-         return;
     }
 
-    if(event.key === "Enter" && entRecPass != null){
-        
-        recuperarcontr();
-        console.log("pressed"+event.key+"on password");
+
+    if (event.key === "Enter" && entlog != null) {
+
+        authenticate();
         return;
     }
-    
-    
-  
+
+    if (event.key === "Enter" && entRecPass != null) {
+        event.preventDefault();
+        recuperarcontr();
+        return;
+    }
+
 
 });
 
-    
 
 
+async function registrar() {
 
 
+    let datos = {};
+    datos.name = document.getElementById('inputFirstName').value;
+    datos.lastname = document.getElementById('inputLastName').value;
+    datos.password = document.getElementById('inputPassword').value;
+    datos.email = document.getElementById('inputEmail').value;
+    datos.numberphone = document.getElementById('inputNumberPhone').value;
+    confirmpass = document.getElementById('inputPasswordConfirm').value;
 
-
-
-
-
-async function registrar(){
-    
-
-    let datos={};
-    datos.name=document.getElementById('inputFirstName').value;
-    datos.lastname=document.getElementById('inputLastName').value;
-    datos.password=document.getElementById('inputPassword').value;
-    datos.email=document.getElementById('inputEmail').value;
-    datos.numberphone=document.getElementById('inputNumberPhone').value;
-    confirmpass=document.getElementById('inputPasswordConfirm').value;
-
-    if(datos.name==''||datos.lastname==''||datos.email==''||datos.numberphone==''||datos.password==''){
+    if (datos.name == '' || datos.lastname == '' || datos.email == '' || datos.numberphone == '' || datos.password == '') {
         console.log(datos);
-      alert("Complete fields to register"); 
-       return;
+        alert("Complete fields to register");
+        return;
     }
 
-    if(confirmpass != datos.password){
+    if (confirmpass != datos.password) {
         alert("Passwords doesn't match");
         return;
     }
-  
-  
 
-  fetch('user/post',{
-         
 
-        method:'POST',
-        headers:{
-			
-			'Cache-Control':'no-store',
-			'Cache-Control':'private',
-            'Accept':'application/json',
-            'Content-Type':'application/json'
-        
+
+    fetch('user/post', {
+
+
+        method: 'POST',
+        headers: {
+
+            'Cache-Control': 'no-store',
+            'Cache-Control': 'private',
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+
         },
-        body:JSON.stringify(datos), 
+        body: JSON.stringify(datos),
     });
 
- 
-   alert("You have been registered");
-	return location.replace(loginpage)
+
+    alert("You have been registered");
+    return location.replace(loginpage)
 
 }
 
 
 
-async function authenticate(){
+async function authenticate() {
 
     let modal = document.getElementById('modal');
-    let span = document.getElementsByClassName('close')[0];    
+    let span = document.getElementsByClassName('close')[0];
 
-    let credentials={};
-    credentials.email=document.getElementById('inputEmail').value;
-    credentials.password=document.getElementById('inputPassword').value;
-  
-   const request= await fetch('user/cred',{
-         
+    let credentials = {};
+    credentials.email = document.getElementById('inputEmail').value;
+    credentials.password = document.getElementById('inputPassword').value;
 
-        method:'POST',
-        headers:{
-			'Cache-Control':'no-store',
-			'Cache-Control':'private',
-            'Accept':'application/json',
-            'Content-Type':'application/json'
-        
+    let request = await fetch('user/cred', {
+
+
+        method: 'POST',
+        headers: {
+
+
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+
         },
-        body:JSON.stringify(credentials), 
+        body: JSON.stringify(credentials),
     });
-    
-    console.log(request.status);
 
-    if(request.status == 403){
-    
-        //document.querySelector('#message').innerHTML = 'Email or Password incorrect';
+
+    if (request.status == 403) {
+
         modal.style.display = 'block';
 
-        span.onclick = function(event){
+        span.onclick = function (event) {
             modal.style.display = 'none';
         }
-        window.onclick = function(event){
-          if(event.target == modal){
-            modal.style.display = 'none';
-                 }
+        window.onclick = function (event) {
+            if (event.target == modal) {
+                modal.style.display = 'none';
             }
-            return;
         }
-    
+        return;
+    }
 
-  	var accesstoken = 'Bearer '+request.headers.get('access_token');
+
+    var accesstoken = 'Bearer ' + request.headers.get('access_token');
     var refreshtoken = request.headers.get('refresh_token');
-   
-    var Mheaders = new Headers();
 
-    Mheaders.append('Authorization',accesstoken);
-   // Mheaders.append('Cache-Control','no-store');
-    Mheaders.append('Accept','application/json');
-    Mheaders.append('Accept','text/html');
-    Mheaders.append('Content-Type','application/json');
-    Mheaders.append('Content-Type','text/plain');
-    
-    
-    
-    localStorage.setItem('Autorization',accesstoken);
-    
-    var req = new Request(url,{
-        method : 'GET',
+    let Mheaders = new Headers();
+
+    Mheaders.append('Authorization', accesstoken);
+    // Mheaders.append('Cache-Control','no-store');
+    Mheaders.append('Accept', 'application/json');
+    Mheaders.append('Accept', 'text/html');
+    Mheaders.append('Content-Type', 'application/json');
+    Mheaders.append('Content-Type', 'text/plain');
+    Mheaders.append('Accept', 'application/xhtml+xml')
+    /*  Mheaders.append('Accept',,application/xml;q=0.9,image/avif,image/webp,q=0.8) */
+
+
+    localStorage.setItem('Authorization', accesstoken);
+    localStorage.setItem('Authorization2',refreshtoken);
+    let req = new Request(url, {
+        method: 'GET',
         headers: Mheaders,
-        redirect: "follow",
-        keepalive : true,
-        
+        keepalive: true,
+
     });
 
-    let fow=await fetch(url,req).then(function(res){
-            if(res.status == 403){
-                location.replace(loginpage)
-                }
-           location.replace(req.url);
+
+    let html = await fetch(req).then((res) => {
+        return res.text();
+    }).catch(e => {
+        console.log(e);
     });
-    
-      
+
+    document.open();
+    document.write(html);
+    document.close();
+    document.URL = 'index.html'
+ 
+    req = new Request('get/users', {
+        method: 'GET',
+        headers: Mheaders,
+        keepalive: true,
+
+    });
+    request = await fetch(req)
+        .catch(e => {
+            console.log(e);
+        });
+
+
+    const users1 = await request.json();
+    let listhtml = '';
+
+
+
+    for (let list of users1) {
+
+        let listusers = ' <tr><td>' + list.id + '</td><td>' + list.name + '</td><td>' + list.lastname + '</td><td>' + list.numberphone + '</td></tr>'
+
+        listhtml += listusers;
+
+
+    }
+
+    document.querySelector('#datatablesSimple tbody').outerHTML = listhtml;
+
+
 }
-async function recuperarcontr(){
-            
-   
-    let modal =document.getElementById("modal");
-    let span =document.getElementsByClassName   ("close")[0];
-     
-    let email= document.getElementById('inputemail').value;
-   
-    const request = await fetch('user/recpass',{
-        method :'POST',
-        headers : {
-             'Cache-Control':'no-store',
-             'Accept' : 'application/json',
-             'Content-Type' : 'application/json'
-         },
-        body:(email),
-    
+async function recuperarcontr() {
+
+
+    let modal = document.getElementById("modal");
+    let span = document.getElementsByClassName("close")[0];
+
+    let email = document.getElementById('inputemail').value;
+
+    const request = await fetch('user/recpass', {
+        method: 'POST',
+        headers: {
+            'Cache-Control': 'no-store',
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: (email),
+
     });
     const response = await request.text();
 
-    if(response == 'true'){
-        document.querySelector('#modal h2').innerHTML ='Sucess';
-        document.querySelector('#modal p').innerHTML="A code sent to "+email;
-        modal.style.display ="block";
-            }
-    else{
-        modal.style.display ="block";
-     
+    if (response == 'true') {
+        document.querySelector('#modal h2').innerHTML = 'Sucess';
+        document.querySelector('#modal p').innerHTML = "A code sent to " + email;
+        modal.style.display = "block";
+    }
+    else {
+        modal.style.display = "block";
+
+    }
+
+
+    span.onclick = function () {
+        modal.style.display = "none";
+        if (response == 'true') location.reload();
+    }
+    window.onclick = function (event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+            if (response == 'true') location.reload();
         }
 
-    
-    span.onclick = function(){
-    modal.style.display= "none";
-    //location.reload();
-        }
-    window.onclick = function(event){
-    if(event.target == modal){
-          modal.style.display= "none";
-             // location.reload();
-            }
+    }
 
-        }
-   
-   }
+
+}
+/*async function logout() {
+
+
+    const req = await fetch("/logout")
+    if (req.status == 403) {
+        location.replace(loginpage);
+
+    }
+    else {
+
+    }
+
+}*/
+
+async function char(){
     
+    let Mheaders = new Headers();
+
+    Mheaders.append('Authorization', localStorage.getItem('Authorization'));
+    Mheaders.append('Accept', 'application/json');
+    Mheaders.append('Accept', 'text/html');
+    Mheaders.append('Content-Type', 'application/json');
+    Mheaders.append('Content-Type', 'text/plain');
+    Mheaders.append('Accept', 'application/xhtml+xml')
+    
+    let req = new Request('/tab.html',{
+            method: 'GET',
+            headers :Mheaders,
+            keepalive: true,
+    });
+    
+    let request = await fetch(req).then((res) =>{
+        if(res.status == 403){        
+            Mheaders.set('Authorization',localStorage.get('Authorization2'));
+            return res;
+        }
+        else {
+        return res.text();
+        }
+    
+  
+    }).catch( (e)=>{
+        console.log(e);
+
+    });
+           
+    let html = request;
+    document.open();
+    document.write(html);
+    document.close();
+    document.URL= 'tab.html'
+    
+    req = new Request('/get/users',{
+        method: 'GET',
+        headers :Mheaders,
+        keepalive: true,
+        });
+
+
+    request = await fetch(req)
+    .catch(e => {
+        console.log(e);
+    });
+
+
+  const users1 = await request.json();
+
+  let listhtml = '';
+
+
+
+    for (let list of users1) {
+
+        let listusers = ' <tr><td>' + list.id + '</td><td>' + list.name + '</td><td>' + list.lastname + '</td><td>' + list.numberphone + '</td></tr>'
+
+        listhtml += listusers;
+
+
+    }
+
+    document.querySelector('#datatablesSimple tbody').outerHTML = listhtml;
+    console.log('0');
+
+    }
+
+
+    async function tab(){
+    
+        let Mheaders = new Headers();
+    
+        Mheaders.append('Authorization', localStorage.getItem('Authorization'));
+        Mheaders.append('Accept', 'application/json');
+        Mheaders.append('Accept', 'text/html');
+        Mheaders.append('Content-Type', 'application/json');
+        Mheaders.append('Content-Type', 'text/plain');
+        Mheaders.append('Accept', 'application/xhtml+xml')
+        
+        let req = new Request('/char.html',{
+                method: 'GET',
+                headers :Mheaders,
+                keepalive: true,
+        });
+        
+        let request = await fetch(req).then((res) =>{
+            if(res.status == 403){        
+                Mheaders.set('Authorization',localStorage.get('Authorization2'));
+                return res;
+            }
+            else {
+            return res.text();
+            }
+        
+      
+        }).catch( (e)=>{
+            console.log(e);
+    
+        });
+               
+        let html = request;
+        document.open();
+        document.write(html);
+        document.close();
+        document.URL= 'char.html';
+    
+        }
+

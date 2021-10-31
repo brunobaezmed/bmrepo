@@ -4,41 +4,33 @@ import com.S1.Sone.UserService.UserService;
 import com.S1.Sone.models.Users;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
-import de.mkammerer.argon2.Argon2;
-import de.mkammerer.argon2.Argon2Factory;
-import org.bouncycastle.math.ec.rfc8032.Ed25519;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.UrlResource;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.config.annotation.web.configurers.oauth2.server.resource.OAuth2ResourceServerConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.argon2.Argon2PasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.header.HeaderWriter;
+import org.springframework.security.web.session.SessionInformationExpiredEvent;
+import org.springframework.security.web.session.SessionInformationExpiredStrategy;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.sql.DataSource;
-import java.io.Console;
 import java.net.MalformedURLException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
-import java.util.List;
 
 @Configuration @EnableWebSecurity
 public class Auth extends WebSecurityConfigurerAdapter  {
@@ -52,6 +44,7 @@ public class Auth extends WebSecurityConfigurerAdapter  {
 	private HttpServletRequest request;
 	@Autowired
 	private HttpServletResponse response;
+	private final String principal="ADMIN";
 	public Auth() throws MalformedURLException {
 	}
 
@@ -59,10 +52,8 @@ public class Auth extends WebSecurityConfigurerAdapter  {
 	public void configureGlobal(AuthenticationManagerBuilder authm)throws Exception {
 
 
-
 		authm.userDetailsService(userDetailService).passwordEncoder(passwordencoder());
-		authm.inMemoryAuthentication().withUser("admin")
-				.password(passwordencoder().encode("3377")).roles("ADMIN","USER");
+
 	}
 
 
@@ -74,35 +65,20 @@ public class Auth extends WebSecurityConfigurerAdapter  {
 
 	protected void configure(HttpSecurity http)throws Exception {
 		http.csrf().disable();
-		http.cors().disable();
-		http.authorizeRequests().antMatchers("/user/delete/**").hasAnyRole("ADMIN","USER");
+		http.authorizeRequests().antMatchers("/user/delete/**").hasAuthority(principal);
 		http.authorizeRequests()
 				.antMatchers("/home.html")
-						.hasAnyRole("ADMIN","USER");
-		http.authorizeRequests().antMatchers("/user/cred","/login.html","/js/**","/css/**","/","/error/*","/password.html"
-						,"/register.html","/user/recpass","/user/post")
+				.hasAuthority(principal);
+		http.authorizeRequests().antMatchers("/user/cred"
+						,"/login.html","/js/**","/css/**","/","/error/*","/password.html"
+						,"/register.html","/user/recpass","/user/post"
+					,"/assets/**","/users/post")
 						.permitAll();
 
-		http.authorizeRequests().anyRequest().authenticated().and().formLogin().disable();
-		http.addFilterAfter(new AuthorizationFilter(),UsernamePasswordAuthenticationFilter.class);
+		http.authorizeRequests().anyRequest().hasAnyAuthority("USER",principal).and().formLogin().disable();
+		http.addFilterBefore(new AuthorizationFilter(),UsernamePasswordAuthenticationFilter.class);
 
-		//http.authorizeRequests().anyRequest().authenticated().and().formLogin();
-	}
-	public UrlResource Info(Users cred)  {
-		Argon2 argon2 = Argon2Factory.create(Argon2Factory.Argon2Types.ARGON2id);
-		List<Users> u= personservice.getAll();
-		String passhashed = "";
-		for(int l=0;l<u.size();l++) {
-			if(u.get(l).getEmail().equals(cred.getEmail())) {
 
-				passhashed=u.get(l).getPassword();
-				boolean result=argon2.verify(passhashed, cred.getPassword().toCharArray());
-				if(result) {
-					return index;
-						}
-				}
-			}
-		return error;
 	}
 
 
@@ -111,7 +87,8 @@ public class Auth extends WebSecurityConfigurerAdapter  {
 		Authentication token= new UsernamePasswordAuthenticationToken(u.getEmail(),u.getPassword());
 
 		 Authentication auth =authenticationManager().authenticate(token);
-			if(auth.isAuthenticated()){
+
+		 	if(auth.isAuthenticated()){
 				Users uauth=personservice.getGemail(u.getEmail());
 				Collection<SimpleGrantedAuthority> grantedAuthorityCollection = new ArrayList<>();
 				grantedAuthorityCollection.add(new SimpleGrantedAuthority(uauth.getRole()));
@@ -138,10 +115,9 @@ public class Auth extends WebSecurityConfigurerAdapter  {
 			return true;
 
 			}
+
 		return false;
 	}
-
-
 
 	}
 

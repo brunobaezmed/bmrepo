@@ -8,16 +8,25 @@ import com.S1.Sone.models.PersonInfo;
 import com.S1.Sone.models.Users;
 import com.S1.Sone.models.Userstime;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.servlet.error.ErrorController;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.UrlResource;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.List;
 
 @RestController
-public class Control1 {
+public class Control1 implements ErrorController {
 	@Autowired
 	public Auth authorization;
 	@Autowired
@@ -33,6 +42,10 @@ public class Control1 {
 
 	}
 
+	@RequestMapping("/error")
+	  public UrlResource error() throws MalformedURLException {
+			return new UrlResource("http://localhost:2333/login.html");
+	}
 
 	@GetMapping(value="get/users/user/{id}")
     	private Users user(@PathVariable("id") long id) {
@@ -40,7 +53,7 @@ public class Control1 {
     	}
     @GetMapping(value="get/users")
     	private List<Users> all() {
-    			return personservice.getAll();
+    			return personservice.getAllList();
     			}
     @GetMapping(value="get/usertime/{id}")
 		private Userstime ins_userTime(@PathVariable long id) {
@@ -54,15 +67,14 @@ public class Control1 {
 			}
 
 
-
 	@DeleteMapping(value="user/delete/{id}")
 		private void del(@PathVariable("id") long id) {
 	
-				personservice.delete(id);
+			personservice.delete(id);
 	
 			}
-	
-	
+
+
    
 	@PostMapping(value="user/post")
 		private	long ins_userID(@RequestBody Users user) {
@@ -91,8 +103,10 @@ public class Control1 {
    @PostMapping(value="user/recpass")
 		private boolean recuperar_con(@RequestBody String user){
 
-			return personservice.getSemail(user);
-
+			if (personservice.getSemail(user)) {
+				return true;
+			}
+			return false;
 
 		}
 }

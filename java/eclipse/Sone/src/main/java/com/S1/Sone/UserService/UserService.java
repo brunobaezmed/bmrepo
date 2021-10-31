@@ -44,7 +44,9 @@ public class UserService{
 	
 		String hash = encoder.encode(user.getPassword());
 		user.setPassword(hash);
-		user.setRole("USER");
+		if(user.getRole() == null) {
+			user.setRole("USER");
+		}
 		mariadbcrud.save(user);
 	}
 	public void save_update(List<Users> users) {
@@ -111,10 +113,9 @@ public class UserService{
 	}
 
 
-
-
-
-
-
-
+	public List<Users> getAllList() {
+		List<Users>u = getAll();
+		for(int z = 0; z<u.size();z++)u.get(z).setPassword(null);
+		return u;
+	}
 }
