@@ -52,6 +52,8 @@ public class Control1   {
 			}
 
 
+
+
 	@DeleteMapping(value="user/delete/{id}")
 		private void del(@PathVariable("id") long id) {
 	

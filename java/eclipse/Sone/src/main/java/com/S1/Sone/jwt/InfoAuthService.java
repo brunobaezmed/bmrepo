@@ -1,5 +1,6 @@
 package com.S1.Sone.jwt;
 
+import com.S1.Sone.models.Users;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -7,28 +8,25 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.S1.Sone.UserService.UserService;
+
+import java.util.List;
+
 @Service
 public class InfoAuthService implements UserDetailsService {
 
 	@Autowired
 	private UserService uservice;
 	
-	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 			
-				
-			for(int z=0;z<uservice.getAll().size();z++) {
-				if(username.equals(uservice.getAll().get(z).getEmail())) {
-					return new InfoAuth(uservice.getAll().get(z));
-				}
-				
-				
+			Users authorizated= uservice.getUserByEmail(email);
+
+					return new InfoAuth(authorizated);
+
 			}
-				throw new UsernameNotFoundException("User Not Found");
-			
-			
 			
 			
 			
 	}
 
-}
+

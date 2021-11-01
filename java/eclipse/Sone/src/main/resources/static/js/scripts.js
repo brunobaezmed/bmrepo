@@ -5,10 +5,10 @@
     */
 // 
 // Scripts
-// 
 
 
 
+        
 window.addEventListener('DOMContentLoaded', event => {
 
     // Toggle the side navigation
@@ -192,7 +192,7 @@ async function authenticate() {
 
 
     const users1 = await request.json();
-    let listhtml = '';
+    let listhtml = '';  
 
 
 
@@ -306,7 +306,7 @@ async function tab() {
     document.close();
     document.URL = 'tab.html'
 
-    req = new Request('/get/users', {
+    req = new Request('get/users', {
         method: 'GET',
         headers: Mheaders,
         keepalive: true,
@@ -416,7 +416,7 @@ async function homepage() {
     document.close();
     document.URL = 'index.html'
 
-    req = new Request('/get/users', {
+    req = new Request('get/users', {
         method: 'GET',
         headers: Mheaders,
         keepalive: true,

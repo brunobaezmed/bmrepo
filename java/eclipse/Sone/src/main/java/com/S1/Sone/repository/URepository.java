@@ -25,9 +25,11 @@ public interface URepository extends CrudRepository<Users,Long> {
 	List<Users> getNameAddbirth1();
 
 
-	
 
-	
-	
+
+
+
+
+
 
 }

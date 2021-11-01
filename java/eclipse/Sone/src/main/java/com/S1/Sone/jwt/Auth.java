@@ -15,6 +15,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.argon2.Argon2PasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -65,8 +66,8 @@ public class Auth extends WebSecurityConfigurerAdapter  {
 				.hasAuthority(principal);
 		http.authorizeRequests().antMatchers("/user/cred"
 						,"/login.html","/js/**","/css/**","/","/error/*","/password.html"
-						,"/register.html","/user/recpass","/user/post"
-					,"/assets/**")
+						,"/register.html","/user/recpass","/users/post"
+					,"/assets/**","/user/post")
 						.permitAll();
 
 		http.authorizeRequests().anyRequest().hasAnyAuthority("USER",principal).and().formLogin().disable();
@@ -84,22 +85,22 @@ public class Auth extends WebSecurityConfigurerAdapter  {
 		 Authentication auth =authenticationManager().authenticate(token);
 
 		 	if(auth.isAuthenticated() ){
-				Users uauth=personservice.getGemail(u.getEmail());
+				 Users authU = personservice.getUserByEmail(u.getEmail());
 				Collection<SimpleGrantedAuthority> grantedAuthorityCollection = new ArrayList<>();
-				grantedAuthorityCollection.add(new SimpleGrantedAuthority(uauth.getRole()));
+				grantedAuthorityCollection.add(new SimpleGrantedAuthority(authU.getRole()));
 
-				new org.springframework.security.core.userdetails.User(u.getEmail(),u.getPassword(),grantedAuthorityCollection);
+				new org.springframework.security.core.userdetails.User(authU.getEmail(),authU.getPassword(),grantedAuthorityCollection);
 
 				Algorithm algorithm = Algorithm.HMAC256("secret".getBytes(StandardCharsets.UTF_8));
 
 				String access_token = JWT.create()
-						.withSubject(uauth.getEmail())
-						.withExpiresAt(new Date(System.currentTimeMillis()+10*60*1000))
+						.withSubject(authU.getEmail())
+						.withExpiresAt(new Date(System.currentTimeMillis()+30*60*1000))
 						.withIssuer(request.getRequestURL().toString())
-						.withClaim("ROLE",uauth.getRole())
+						.withClaim("ROLE",authU.getRole())
 						.sign(algorithm);
 				String refresh_token = JWT.create()
-						.withSubject(uauth.getEmail())
+						.withSubject(authU.getEmail())
 						.withExpiresAt(new Date(System.currentTimeMillis()+30*60*1000))
 						.withIssuer(request.getRequestURL().toString())
 						.sign(algorithm);
