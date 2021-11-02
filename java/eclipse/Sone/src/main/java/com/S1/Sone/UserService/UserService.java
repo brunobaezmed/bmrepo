@@ -130,7 +130,7 @@ public class UserService{
 		List<Users>u = getAll();
 		for(int z = 0; z<u.size();z++){
 			u.get(z).setPassword("null");
-			if(u.get(z).getRole().startsWith("A"))u.remove(z);
+			if(u.get(z).getRole().equals("ADMIN"))u.remove(u.get(z));
 		}
 		return u;
 	}

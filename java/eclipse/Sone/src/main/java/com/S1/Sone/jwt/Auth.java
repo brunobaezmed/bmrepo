@@ -15,7 +15,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.argon2.Argon2PasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -39,7 +39,9 @@ public class Auth extends WebSecurityConfigurerAdapter  {
 	private HttpServletRequest request;
 	@Autowired
 	private HttpServletResponse response;
+
 	private final String principal="ADMIN";
+
 	public Auth() throws MalformedURLException {
 	}
 
@@ -60,18 +62,16 @@ public class Auth extends WebSecurityConfigurerAdapter  {
 
 	protected void configure(HttpSecurity http)throws Exception {
 		http.csrf().disable();
-		http.authorizeRequests().antMatchers("/user/delete/**").hasAuthority(principal);
-		http.authorizeRequests()
-				.antMatchers("/home.html")
-				.hasAuthority(principal);
+		AuthorizationFilter authorizationFilter=new AuthorizationFilter();
+
 		http.authorizeRequests().antMatchers("/user/cred"
 						,"/login.html","/js/**","/css/**","/","/error/*","/password.html"
 						,"/register.html","/user/recpass","/users/post"
 					,"/assets/**","/user/post")
 						.permitAll();
-
-		http.authorizeRequests().anyRequest().hasAnyAuthority("USER",principal).and().formLogin().disable();
-		http.addFilterBefore(new AuthorizationFilter(),UsernamePasswordAuthenticationFilter.class);
+	//	http.authorizeRequests().anyRequest().hasAnyAuthority("USER",principal);
+		http.formLogin().disable();
+		http.addFilterBefore(authorizationFilter,UsernamePasswordAuthenticationFilter.class);
 	    http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
 
@@ -104,11 +104,11 @@ public class Auth extends WebSecurityConfigurerAdapter  {
 						.withExpiresAt(new Date(System.currentTimeMillis()+30*60*1000))
 						.withIssuer(request.getRequestURL().toString())
 						.sign(algorithm);
+
 				response.setHeader("access_token",access_token);
 				response.setHeader("refresh_token",refresh_token);
 
-
-			return true;
+				return true;
 
 			}
 

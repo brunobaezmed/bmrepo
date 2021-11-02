@@ -1,4 +1,4 @@
-/*!
+    /*!
     * Start Bootstrap - SB Admin v7.0.3 (https://startbootstrap.com/template/sb-admin)
     * Copyright 2013-2021 Start Bootstrap
     * Licensed under MIT (https://github.com/StartBootstrap/startbootstrap-sb-admin/blob/master/LICENSE)
@@ -258,13 +258,8 @@ async function logout() {
 
 
     const req = await fetch("/logout")
-    if (req.status == 403) {
-        location.replace('/login.html');
+    location.replace('/login.html');
 
-    }
-    else {
-
-    }
 
 }
 
@@ -284,7 +279,7 @@ async function tab() {
         headers: Mheaders,
         keepalive: true,
     });
-
+    
     let request = await fetch(req).then((res) => {
         if (res.status == 403) {
             Mheaders.set('Authorization', localStorage.get('Authorization2'));
@@ -449,3 +444,6 @@ async function homepage() {
 
 
 }
+
+
+

@@ -28,7 +28,6 @@ public class Control1   {
 	@RequestMapping(value="/")
 		private UrlResource homepage() throws MalformedURLException {
 			return new UrlResource("http://localhost:2333/login.html");
-
 	}
 
 
@@ -54,7 +53,11 @@ public class Control1   {
 
 
 
-	@DeleteMapping(value="user/delete/{id}")
+
+
+
+
+	@DeleteMapping(value="/adm/user/delete/{id}")
 		private void del(@PathVariable("id") long id) {
 	
 			personservice.delete(id);
