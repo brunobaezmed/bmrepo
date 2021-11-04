@@ -27,6 +27,7 @@ ArrayofNodes(){
 
 };
 ~ArrayofNodes(){
+     delete[]troot;
 };
 void insert(int key,long value,Node *n){
 
