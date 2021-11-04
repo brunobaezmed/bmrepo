@@ -1,8 +1,0 @@
-
-template <typename Key, typename E>
-BSTNode<Key, E>* BST<Key, E>::
-getmin(BSTNode<Key, E>* rt) {
-if (rt->left() == NULL)
-return rt;
-else return getmin(rt->left());
-}
