@@ -20,10 +20,19 @@ void test1()
 	tree->insert(15, "Bruno");
 	tree->insert(27, "afaf");
 	tree->insert(16, "unfdfhdiq");
-	tree->insert(19, "ANIGIOENGQ3PGP");
+	tree->insert(19, "AENPGP");
+	
+	
 
 	tree->postorder();
+	cout<<"deleted "<<tree->delete_key(521)<<"\n";
+	cout<<"deleted "<<tree->delete_key(5)<<"\n";
+	cout<<"deleted "<<tree->delete_key(1)<<"\n";
+	cout<<"deleted "<<tree->delete_key(27)<<"\n";
+	cout<<"deleted "<<tree->delete_key(20)<<"\n";
+		tree->postorder();
 	cout << tree->sz();
+	return ;
 }
 void test2()
 {
@@ -35,15 +44,26 @@ void test2()
 	tree->insert(5, "m5");
 	tree->insert(23, "q4");
 	cout<<"\n";
-	tree->delete_Node(33);
+	
+
+
+	cout<<"deleted "<<tree->delete_key(33)<<"\n";
+	tree->postorder();
+	cout<<"\n";
+	tree->insert(33, "b6");
+
 	tree->postorder();
 	cout << tree->sz();
 }
+void test3(){
+	
+
+}
 int main()
 {
-
 	test1();
-	test2();
+	//
+	//test2();
 
 	return 0;
 }
