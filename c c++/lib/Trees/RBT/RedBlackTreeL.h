@@ -154,7 +154,7 @@ public:
 	void insertNode(Node *n, type1 key, type2 value)
 	{
 
-		if (iterator == 0)
+		if (root->key == 0)
 		{
 			(root)->key = key;
 			(root)->value = value;
@@ -163,7 +163,7 @@ public:
 			return;
 		};
 		if (n->key == key)
-			return;
+			__throw_invalid_argument("key duplicated");
 		if (key > n->key)
 		{
 			if (n->right == nullptr)
@@ -389,57 +389,115 @@ public:
 	type1 delete_key(type1 key)
 	{
 		Node *troot = Treeroot();
+		color_t swapColor = RED;
 		Node *node = getNode(troot, key);
-		if (node->color == RED && node->left == nullptr && node->right == nullptr)
+		if (node->left == nullptr && node->right == nullptr && node->color == RED)
 		{
 			return delete_node(node);
 		}
-		if (node->left != nullptr || node->right != nullptr)
-		{
-			if (node->left != nullptr)
-				replace(node, node->left);
-			else
-				replace(node, node->right);
-		}
+		
+
 		if (node->color == BLACK)
 		{
 			if (node->left != nullptr && node->left->color == RED && node->right == nullptr)
 			{
+				delete_node(node);
 				return key;
 			}
 			else if (node->right != nullptr && node->right->color == RED && node->left == nullptr)
-			{
+			{	delete_node(node);
 				return key;
 			}
-			if ( node->left == nullptr && node->right == nullptr)
+			Node *bro = brother(node);
+			Ercase1(node, bro);
+			bro = brother(node);
+			if (bro->color == BLACK)
 			{
+				if (node->left == nullptr && node->right == nullptr || bro->left->color == BLACK && bro->right->color == BLACK)
+				{
+					bro->color = RED;
+					if (node->root->color == RED)
+					{
+						node->root->color == BLACK;
+						delete_node(node);
+						return key;
+					}
+					else
+					{
+						
+						return delete_key(key);
+					}
+				}
 
+				if (bro->left != nullptr && bro->left->color == RED && (bro->right == nullptr || bro->right->color == BLACK))
+				{
+					color_t swapcolor = bro->left->color;
+					bro->left->color = bro->color;
+					bro->color = swapColor;
+					rot_right(bro);
+				}
+				if (bro->right->color == RED)
+				{
+					bro->right->color = BLACK;
+					node->root->color = BLACK;
+					rot_left(node->root);
+					delete_node(node);
+					return key;
+				}
 			}
 		}
-		return (type1)0;
+		
+		return key;
 	}
 	type1 delete_node(Node *n)
 	{
-		Node *r = n->root;
-		if (r->right == n)
+		type1 er = n->key;
+		Node *r;
+		if (n->root == nullptr)
 		{
-			r->right = nullptr;
+			if (n->left != nullptr || n->right != nullptr)
+		{
+			if (n->left != nullptr)
+				replace(n, n->left);
+			else
+				replace(n, n->right);
+		}
+			return er;
 		}
 		else
 		{
-			r->left = nullptr;
+			r = n->root;
+			if (r->right == n)
+			{
+				r->right = nullptr;
+			}
+			else
+			{
+				r->left = nullptr;
+			}
 		}
-		type1 er = n->key;
 		n->key = 0;
 		size--;
 		return er;
 	}
 
-	Node *bro(Node *n)
+	Node *brother(Node *n)
 	{
 		if (n == n->root->right)
 			return n->root->left;
 		else
 			return n->root->right;
+	}
+
+	void Ercase1(Node *node, Node *bro)
+	{
+		color_t swapColor = RED;
+		if (bro->color == RED)
+		{
+			swapColor = node->root->color;
+			node->root->color = bro->color;
+			bro->color = swapColor;
+			rot_left(node->root);
+		}
 	}
 };

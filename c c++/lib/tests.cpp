@@ -37,19 +37,22 @@ void insert(int key,long value,Node *n){
      
           tz++;
      
+
 }
+ void newnode(int n)    {
+      delete[]troot;
+      troot = new Node[n];
+};
 
 int size(){return tz;}
      
 
 };
 void k(){
-
-     ArrayofNodes a;
-     a.insert(5,7352,a.troot);
-     a.insert(53,421,a.troot);
-     a.insert(2,421,a.troot);
-     a.insert(1,76575,a.troot);
+     ArrayofNodes h;
+     h.newnode(5);
+     h.newnode(7);
+     
 
 };
 int main(){
