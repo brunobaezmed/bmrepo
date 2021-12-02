@@ -1,11 +1,8 @@
 package searching;
 
-import java.io.PrintStream;
-import java.util.Arrays;
-
 import sorting.LinkedList;
-
 import java.io.*;
+import java.util.Arrays;
 
 
 public class TestBinarySearch {
@@ -17,7 +14,7 @@ public class TestBinarySearch {
 	  int n=0;	
 	 
       
-	  Binarysearch B=new Binarysearch();
+	  searching.Binarysearch B=new searching.Binarysearch();
 	  FileReader Read=B.filereader(new File("/home/bruno/Documents/java/eclipse/Searching/src/searching/FileSymbol"));  
 	  BufferedReader BRead=new BufferedReader(Read);	
 	  

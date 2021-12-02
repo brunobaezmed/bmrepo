@@ -21,6 +21,7 @@ public class OrderedSymbolT <Key extends Comparable<Key>,Value extends Comparabl
 		this.curr=0;
 		this.n=this.size;
 			}
+
 	public void put(Key key,Value value) {
 			
 			if(value==null) {

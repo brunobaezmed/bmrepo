@@ -1,8 +1,5 @@
 package searching;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,7 +7,7 @@ public class TestBST {
 
 	public static void main(String[] args) {
 		SecureRandom rng=new SecureRandom();
-		BinarySearchTree<Long,String> bst=new BinarySearchTree<Long,String>();
+		searching.BinarySearchTree<Long,String> bst=new searching.BinarySearchTree<Long,String>();
 		Long t =System.nanoTime();
 		List<String> values = null;
 		ArrayList<Long>keys=new ArrayList<Long>();
