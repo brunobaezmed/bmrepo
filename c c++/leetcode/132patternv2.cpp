@@ -9,34 +9,35 @@ test6 0
 */
 #include<iostream>
 #include<vector>
+#include <stack>
 using namespace std;
 class Solution {
 public:
     bool find132pattern(vector<int>& nums) {
         int i = 0;
         int j = 0;
-        int k = 0;
+        int min = INT32_MIN;
         
-    
+        stack<int> s;
         const int size = nums.size();
         if(size < 3 ) return false;
-         for(i = 0 ; i < size && i+1 <size ; i++){
+         for(i = size - 1;  i >= 0 ;i--){
 
-                    j = 0;
-                    for(j = i+1 ;  j < size   &&( (nums[i] <= nums[j] ) || j < size)  ;j++){
 
-                            for(k = i ;k < j  ;k++){
-
-                                    if(  nums[k] > nums[j] && nums[i] < nums[j]  ){
-                                    return true;
-                                }
-                
+                            if(nums[i]<min){
+                                return true;
                             }
-
-                        
-
+                            else{
+                                while (!s.empty() &&  nums[i] > s.top()   )
+                                {
+                                    min = s.top();
+                                    s.pop();
+                                }
+                               
+                            }
+                        s.push(nums[i]);
                     }
-                }
+                
             
             return false;
 
