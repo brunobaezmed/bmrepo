@@ -1,11 +1,16 @@
 
 /*
-test1 1
-test2 1
-test3 1
-test4 0
-test5 1
-test6 0
+Given an array of n integers nums, a 132 pattern is a subsequence of three integers nums[i], nums[j] and nums[k] such that i < j < k and nums[i] < nums[k] < nums[j].
+
+Return true if there is a 132 pattern in nums, otherwise, return false.
+
+ 
+
+Example 1:
+
+Input: nums = [1,2,3,4]
+Output: false
+Explanation: There is no 132 pattern in the sequence.
 */
 #include<iostream>
 #include<vector>
